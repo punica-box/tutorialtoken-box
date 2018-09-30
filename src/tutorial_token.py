@@ -21,7 +21,7 @@ oep4.set_contract_address(app.config['DEFAULT_CONTRACT_ADDRESS'])
 gas_price = app.config['GAS_PRICE']
 gas_limit = app.config['GAS_LIMIT']
 wallet_manager = WalletManager()
-wallet_path = os.path.join(os.getcwd(), 'wallet', 'wallet.json')
+wallet_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'wallet', 'wallet.json')
 if os.path.isfile(wallet_path):
     wallet_manager.open_wallet(wallet_path)
 
