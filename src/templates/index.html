@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <title>DXToken - A Token DApp based on OEP4</title>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.4.6/lib/theme-chalk/index.css">
+    {{ JSGlue.include() }}
+    <!-- import favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        .el-select .el-input {
+            width: 240px;
+        }
+
+        .input-with-select .el-input-group__prepend {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="vue-app" style="width:1200px; margin:auto">
+    <el-tabs type="border-card" @tab-click="tabClickHandler">
+        <el-tab-pane label="Information Query">
+            <div style="margin-bottom: 15px;">
+                <el-row :gutter="20">
+                    <el-col :span="24">
+                        <el-input
+                                placeholder="Please input TxHash"
+                                type="string"
+                                v-model="eventKey"
+                                class="input-with-select">
+                            <el-select v-model="eventInfoSelect" slot="prepend" placeholder="Select">
+                                <el-option label="State" value="State"/>
+                                </el-option>
+                                <el-option label="GasConsumed" value="GasConsumed"></el-option>
+                                <el-option label="Notify" value="Notify"></el-option>
+                            </el-select>
+                            <el-button slot="append" icon="el-icon-search" @click="queryEvent"></el-button>
+                        </el-input>
+                    </el-col>
+                </el-row>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <el-row :gutter="20">
+                    <el-col :span="24">
+                        <el-input
+                                placeholder="Please input base58 encode address"
+                                type="string"
+                                v-model="assetKey"
+                                class="input-with-select">
+                            <el-select v-model="assetSelect" slot="prepend" placeholder="Select">
+                                <el-option label="ONT" value="ONT"></el-option>
+                                <el-option label="ONG" value="ONG"></el-option>
+                                <el-option label="OEP4 Token" value="OEP4 Token"></el-option>
+                            </el-select>
+                            <el-button slot="append" icon="el-icon-search" @click="queryBalance"></el-button>
+                        </el-input>
+                    </el-col>
+                </el-row>
+            </div>
+
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-button type="primary" round @click="getName">Token Name</el-button>
+                        </el-row>
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-button type="primary" round @click="getSymbol">Token Symbol</el-button>
+                        </el-row>
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-button type="primary" round @click="getDecimal">Token Decimal</el-button>
+                        </el-row>
+                    </div>
+                </el-col>
+            </el-row>
+        </el-tab-pane>
+
+        <el-tab-pane label="Token Transfer">
+            <el-form
+                    :model="transferForm"
+                    :rules="transferFormRules"
+                    ref="transferForm"
+                    label-width="0px"
+                    class="demo-ruleForm">
+                <el-row :gutter="20">
+                    <el-col :span="11">
+                        <div class="grid-content bg-purple-light">
+                            <el-row>
+                                <el-form-item prop="inputTransferTo">
+                                    <el-input
+                                            size="medium"
+                                            type="string"
+                                            placeholder="base58 encode address"
+                                            suffix-icon="el-icon-location"
+                                            v-model="transferForm.inputTransferTo">
+                                        <template slot="prepend">to</template>
+                                    </el-input>
+                                </el-form-item>
+                            </el-row>
+                        </div>
+                    </el-col>
+                    <el-col :span="10">
+                        <div class="grid-content bg-purple">
+                            <el-row>
+                                <el-form-item prop="inputTransferAmount">
+                                    <el-input
+                                            size="medium"
+                                            type="number"
+                                            placeholder="the amount of oep4 token"
+                                            suffix-icon="el-icon-caret-right"
+                                            v-model="transferForm.inputTransferAmount">
+                                        <template slot="prepend">amount</template>
+                                    </el-input>
+                                </el-form-item>
+                            </el-row>
+                        </div>
+                    </el-col>
+                    <el-col :span="2">
+                        <div class="grid-content bg-purple">
+                            <el-row>
+                                <el-button
+                                        type="primary"
+                                        icon="el-icon-caret-right"
+                                        round @click="transfer">
+                                    transfer
+                                </el-button>
+                            </el-row>
+                        </div>
+                    </el-col>
+                </el-row>
+            </el-form>
+        </el-tab-pane>
+
+        <el-tab-pane label="Token TransferMulti">
+            <el-form
+                    :model="multiTransferForm"
+                    ref="multiTransferForm"
+                    label-width="0px"
+                    class="demo-dynamic">
+                <el-row :gutter="20">
+                    <el-col :span="5">
+                        <el-form-item
+                                v-for="(fromAddress,index) in multiTransferForm.fromAddressArray"
+                                :key="fromAddress.key"
+                                :prop="'fromAddressArray.'+index+'.value'">
+                            <el-select
+                                    v-model="multiTransferForm.fromAddressArray[index]"
+                                    clearable
+                                    size="medium"
+                                    placeholder="Select From Account">
+                                <el-option
+                                        v-for="fromAddress in settingForm.accountOptions"
+                                        :key="fromAddress.value"
+                                        :label="fromAddress.label"
+                                        :value="fromAddress.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="11">
+                        <el-form-item
+                                v-for="(toAddress, index) in multiTransferForm.toAddressArray"
+                                :key="toAddress.key"
+                                :prop="'toAddressArray.' + index + '.value'"
+                                :rules="[{required:true,message:'to address can not be null', trigger: 'blur'},
+                                { min: 34, max: 34, message: 'Length should be 34', trigger: 'blur' }]">
+                            <el-input
+                                    size="medium"
+                                    type="string"
+                                    placeholder="base58 encode address"
+                                    suffix-icon="el-icon-location"
+                                    v-model="toAddress.value">
+                                <template slot="prepend">To</template>
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-form-item
+                                v-for="(amount,index) in multiTransferForm.amountArray"
+                                :key="amount.key"
+                                :prop="'amountArray.'+index+'.value'"
+                                :rules="{
+                                required:true,message:'amount can not be null', trigger: 'blur'
+                                }">
+                            <el-col :span="16">
+                                <el-input
+                                        size="medium"
+                                        type="number"
+                                        placeholder="oep4 token"
+                                        suffix-icon="el-icon-caret-right"
+                                        v-model="amount.value">
+                                    <template slot="prepend">Amount</template>
+                                </el-input>
+                            </el-col>
+                            <el-col :span="8">
+                                <el-button
+                                        round
+                                        type="danger"
+                                        icon="el-icon-delete"
+                                        @click.prevent="removeTransfer(amount)">
+                                </el-button>
+                            </el-col>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-form-item>
+                    <el-row :gutter="20">
+                        <el-col :span="8">
+                            <el-button
+                                    type="success"
+                                    round @click="submitMultiTransferForm('multiTransferForm')">
+                                Submit
+                            </el-button>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-button
+                                    type="primary"
+                                    round @click="addTransfer">
+                                New Transfer
+                            </el-button>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-button type="warning"
+                                       round @click="resetMultiTransferForm('multiTransferForm')">
+                                Reset
+                            </el-button>
+                        </el-col>
+                    </el-row>
+                </el-form-item>
+            </el-form>
+        </el-tab-pane>
+
+        <el-tab-pane label="Token Approve">
+            <el-row :gutter="20">
+                <el-col :span="11">
+                    <div class="grid-content bg-purple-light">
+                        <el-row>
+                            <el-input
+                                    size="medium"
+                                    type="string"
+                                    placeholder="base58 encode address"
+                                    suffix-icon="el-icon-location"
+                                    v-model="inputApproveSpender">
+                                <template slot="prepend">spender</template>
+                            </el-input>
+                        </el-row>
+                    </div>
+                </el-col>
+                <el-col :span="10">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-input
+                                    size="medium"
+                                    type="number"
+                                    placeholder="the amount of oep4 token"
+                                    suffix-icon="el-icon-caret-right"
+                                    v-model="inputApproveAmount">
+                                <template slot="prepend">amount</template>
+                            </el-input>
+                        </el-row>
+                    </div>
+                </el-col>
+                <el-col :span="2">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-button type="primary" round @click="approve">approve</el-button>
+                        </el-row>
+                    </div>
+                </el-col>
+            </el-row>
+        </el-tab-pane>
+
+        <el-tab-pane label="Token Allowance">
+            <el-row :gutter="20">
+                <el-col :span="11">
+                    <div class="grid-content bg-purple-light">
+                        <el-row>
+                            <el-input
+                                    size="medium"
+                                    type="string"
+                                    placeholder="base58 encode address"
+                                    suffix-icon="el-icon-location"
+                                    v-model="inputAllowanceOwner">
+                                <template slot="prepend">owner</template>
+                            </el-input>
+                        </el-row>
+                    </div>
+                </el-col>
+                <el-col :span="10">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-input
+                                    size="medium"
+                                    type="string"
+                                    placeholder="base58 encode address"
+                                    suffix-icon="el-icon-location"
+                                    v-model="inputAllowanceSpender">
+                                <template slot="prepend">spender</template>
+                            </el-input>
+                        </el-row>
+                    </div>
+                </el-col>
+                <el-col :span="2">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-button type="primary" round @click="allowance">allowance</el-button>
+                        </el-row>
+                    </div>
+                </el-col>
+            </el-row>
+        </el-tab-pane>
+        <el-tab-pane label="Token TransferFrom">
+            <el-form
+                    :model="transferFromForm"
+                    ref="TransferFromForm"
+                    label-width="0px">
+                <el-row :gutter="20">
+                    <el-col :span="5">
+                        <el-form-item>
+                            <el-select
+                                    v-model="transferFromForm.spenderAddress"
+                                    clearable
+                                    size="medium"
+                                    placeholder="Select Spender Account">
+                                <el-option
+                                        v-for="spenderAddress in settingForm.accountOptions"
+                                        :key="spenderAddress.value"
+                                        :label="spenderAddress.label"
+                                        :value="spenderAddress.value">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item>
+                            <el-input
+                                    size="medium"
+                                    type="string"
+                                    placeholder="base58 encode address"
+                                    suffix-icon="el-icon-location"
+                                    v-model="transferFromForm.fromAddress">
+                                <template slot="prepend">From</template>
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item>
+                            <el-input
+                                    size="medium"
+                                    type="string"
+                                    placeholder="base58 encode address"
+                                    suffix-icon="el-icon-location"
+                                    v-model="transferFromForm.toAddress">
+                                <template slot="prepend">To</template>
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="7">
+                        <el-form-item>
+                            <el-col :span="17">
+                                <el-input
+                                        size="medium"
+                                        type="number"
+                                        placeholder="oep4 token"
+                                        v-model="transferFromForm.amount">
+                                    <template slot="prepend">Amount</template>
+                                </el-input>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button
+                                        round
+                                        type="success"
+                                        icon="el-icon-caret-right"
+                                        @click.prevent="transferFrom">
+                                </el-button>
+                            </el-col>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
+        </el-tab-pane>
+
+        <el-tab-pane label="DApp Settings">
+            <div style="margin-bottom: 5px;">
+                <el-form :label-position="labelPosition" label-width="150px" :model="settingForm">
+                    <el-row :gutter="5">
+                        <el-col :span="8">
+                            <el-form-item label="Default Network">
+                                <el-cascader
+                                        expand-trigger="hover"
+                                        filterable
+                                        :options="settingForm.networkOptions"
+                                        v-model="settingForm.networkSelected"
+                                        @change="networkChange">
+                                </el-cascader>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-form-item label="Default Account">
+                                <el-cascader
+                                        expand-trigger="hover"
+                                        filterable
+                                        :options="settingForm.accountOptions"
+                                        v-model="settingForm.accountSelected"
+                                        @change="accountChange">
+                                </el-cascader>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="8">
+                            <el-input
+                                    v-model="settingForm.b58AddressSelected"
+                                    :disabled="true">
+                            </el-input>
+                        </el-col>
+                    </el-row>
+                </el-form>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <el-row>
+                                <el-button type="success" round @click="createAccount">Create Account</el-button>
+                            </el-row>
+                        </div>
+                        <el-dialog
+                                title="Create successful"
+                                width="35%"
+                                :visible.sync="privateKeyDialogVisible"
+                                :close-on-click-modal="false"
+                                :show-close="false"
+                                :close-on-press-escape="false">
+                            <div class="block" style="margin-bottom: 15px;">
+                                <el-input
+                                        v-model="newHexPrivateKey"
+                                        size="small"
+                                        suffix-icon="el-icon-edit-outline"
+                                        :disabled="true">
+                                    <template slot="prepend">private key:</template>
+                                </el-input>
+                            </div>
+                            <span slot="footer" class="dialog-footer">
+                            <el-button type="primary" @click="privateKeyDialogVisible = false">Confirm</el-button>
+                        </span>
+                        </el-dialog>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <el-row>
+                                <el-button type="primary" round @click="importAccount">Import Account</el-button>
+                            </el-row>
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div class="grid-content bg-purple">
+                            <el-row>
+                                <el-button type="warning" round @click="removeAccount">Remove Account</el-button>
+                            </el-row>
+                        </div>
+                    </el-col>
+                </el-row>
+            </div>
+        </el-tab-pane>
+    </el-tabs>
+</div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui@2.4.6/lib/index.js"></script>
+<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</html>
