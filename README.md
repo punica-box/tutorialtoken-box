@@ -364,7 +364,7 @@ Before you transfer, you can check the account's balance which will receive the 
 
 ![transfer0](img/transfer0.png)
 
-You can paste an base58 encode address and input a value you want to transfer.
+You can paste a base58 encode address and input a value you want to transfer.
 
 ![transfer1](img/transfer1.png)
 
@@ -372,11 +372,11 @@ In our tutorial project, we need you to provide account's password for the basic
 
 ![transfer2](img/transfer2.png)
 
-As an tutorial project, we need you to confirm your transaction before send it network, because it involve to Token which is an important digital asset in Blockchain.
+As a tutorial project, we need you to confirm your transaction before send it network, because it involve to Token which is an important digital asset in Blockchain.
 
 ![transfer3](img/transfer3.png)
 
-As you can see, if everything goes smoothly, you will receive an hexadecimal TxHash, which you can used to query the information of your transaction.
+As you can see, if everything goes smoothly, you will receive a hexadecimal TxHash, which you can used to query the information of your transaction.
 
 ![transfer4](img/transfer4.png)
 
