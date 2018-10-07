@@ -1,0 +1,14 @@
+{
+  "ignore": [
+    ".git",
+    ".gitignore",
+    "README.md",
+    "img"
+  ],
+  "commands": {
+    "Compile": "punica compile",
+    "Deploy": "punica deploy",
+    "Test contracts": "punica test",
+    "Run dev server": "python tutorial_token.py"
+  }
+}
