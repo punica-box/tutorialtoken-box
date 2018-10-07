@@ -9,7 +9,7 @@ from ontology.exception.exception import SDKException
 from ontology.ont_sdk import OntologySdk
 from ontology.utils import util
 
-app = Flask('DXToken', static_folder='static', template_folder='templates')
+app = Flask('DXToken', static_folder='static', template_folder='static\\html')
 app.config.from_object('default_settings')
 jsglue = JSGlue()
 jsglue.init_app(app)
