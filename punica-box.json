@@ -3,7 +3,8 @@
     ".git",
     ".gitignore",
     "README.md",
-    "img"
+    "img",
+    "test"
   ],
   "commands": {
     "Compile": "punica compile",
