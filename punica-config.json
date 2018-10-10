@@ -1,0 +1,75 @@
+{
+  "networks": {
+    "testNet": {
+      "host": "http://polaris3.ont.io",
+      "port": 20336
+    },
+    "mainNet": {
+      "host": "http://dappnode1.ont.io",
+      "port": 20336
+    },
+    "privateNet": {
+      "host": "http://127.0.0.1",
+      "port": 20336
+    }
+  },
+  "defaultWallet":"wallet.json",
+  "deployConfig": {
+    "name": "tutorialToken",
+    "version": "1.0.0",
+    "author": "Nash",
+    "email": "wdx7266@vip.qq.com",
+    "desc": "A tutorial token based on Ontology Blockchain",
+    "needStorage": true,
+    "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+    "gasPrice": 500,
+    "gasLimit": 21000000
+  },
+  "invokeConfig":{
+    "abi":"oep4.json",
+    "defaultPayer":"ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+    "defaultSigner":"ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+    "gasPrice": 500,
+    "gasLimit": 21000000,
+    "Functions":{
+      "Name":{
+        "params":[],
+        "signers":[]
+      },
+      "Symbol":{
+        "params":[],
+        "signers":[]
+      },
+      "Decimal":{
+        "params":[],
+        "signers":[]
+      },
+      "TotalSupply":{
+        "params":[],
+        "signers":[]
+      },
+      "BalanceOf":{
+        "params":["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"],
+        "signers":[]
+      },
+      "Transfer":{
+        "params":["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6","AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",1],
+        "signers":["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"],
+        "payer":"ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+      },
+      "TransferMulti":{
+        "params":[["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6", "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve", 1], ["AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve", "Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1", 2]],
+        "signers":["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6","AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"],
+        "payer":"ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+      },
+      "Allowance":{
+        "params":["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6","AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"],
+        "signers":["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"]
+      },
+      "TransferFrom":{
+        "params":["AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve","ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6","Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1",1],
+        "signers":["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"]
+      }
+    }
+  }
+}
