@@ -26,7 +26,7 @@
     "gasLimit": 21000000
   },
   "invokeConfig":{
-    "abi":"oep4.json",
+    "abi":"oep4_token_abi.json",
     "defaultPayer":"ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
     "defaultSigner":"ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
     "gasPrice": 500,
