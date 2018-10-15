@@ -1,0 +1,132 @@
+{
+  "defaultWallet":"wallet.json",
+  "deployConfig": {
+    "name": "tutorialToken",
+    "version": "1.0.0",
+    "author": "Nash",
+    "email": "wdx7266@vip.qq.com",
+    "desc": "A tutorial token based on Ontology Blockchain",
+    "needStorage": true,
+    "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+    "gasPrice": 500,
+    "gasLimit": 21000000
+  },
+  "invokeConfig":{
+      "abi": "oep4_token_abi.json",
+      "defaultPayer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+      "defaultSigner": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+      "gasPrice": 0,
+      "gasLimit": 21000000,
+      "Functions": {
+          "Name": {
+              "params": {},
+              "signers": {},
+              "preExec": true
+          },
+          "Symbol": {
+              "params": {},
+              "signers": {},
+              "preExec": true
+          },
+          "Decimal": {
+              "params": {},
+              "signers": {},
+              "preExec": true
+          },
+          "TotalSupply": {
+              "params": {},
+              "signers": {},
+              "preExec": true
+          },
+          "BalanceOf": {
+              "params": {
+                  "account": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+              },
+              "signers": {},
+              "preExec": true
+          },
+          "Transfer": {
+              "params": {
+                  "from_acct": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                  "to_acct": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                  "amount": 1
+              },
+              "signers": {
+                  "m": 1,
+                  "signer": [
+                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                  ]
+              },
+              "preExec": false
+          },
+          "TransferMulti": {
+              "params": {
+                  "args": [
+                      {
+                          "from": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                          "to": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                          "amount": 1
+                      },
+                      {
+                          "from": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                          "to": "ByteArray:Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1",
+                          "amount": 2
+                      }
+                  ]
+              },
+              "signers": {
+                  "m": 1,
+                  "signer": [
+                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                      "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                  ]
+              },
+              "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+              "preExec": false
+          },
+          "Allowance": {
+              "params": {
+                  "owner": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                  "spender": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+              },
+              "signers": {
+                  "m": 1,
+                  "signer": [
+                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                  ]
+              },
+              "preExec": false
+          },
+          "TransferFrom": {
+              "params": {
+                  "sender": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                  "from_acct": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                  "to_acct": "ByteArray:Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1",
+                  "amount": 1
+              },
+              "signers": {
+                  "m": 1,
+                  "signer": ["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"]
+              },
+              "preExec": false
+          },
+          "Init": {
+              "params": {},
+              "signers": {},
+              "preExec": true
+          },
+          "Approve": {
+              "params": {
+                  "owner": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                  "spender": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                  "amount": 1
+              },
+              "signers": {
+                "m": 1,
+                  "signer": ["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"]
+              },
+              "preExec": true
+          }
+      }
+  }
+}
