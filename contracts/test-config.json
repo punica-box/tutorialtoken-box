@@ -1,5 +1,9 @@
 {
   "defaultWallet":"wallet.json",
+  "password":{
+      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6": "password",
+      "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve": "password"
+  },
   "deployConfig": {
     "name": "tutorialToken",
     "version": "1.0.0",
@@ -17,7 +21,7 @@
       "defaultSigner": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
       "gasPrice": 0,
       "gasLimit": 21000000,
-      "Functions": {
+      "functions": {
           "Name": {
               "params": {},
               "signers": {},
