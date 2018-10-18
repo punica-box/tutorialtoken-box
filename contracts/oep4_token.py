@@ -4,8 +4,8 @@ from boa.builtins import concat, ToScriptHash
 
 ctx = GetContext()
 
-NAME = 'tokenName'
-SYMBOL = 'Symbol'
+NAME = 'DXToken'
+SYMBOL = 'DX'
 DECIMAL = 8
 FACTOR = 100000000
 OWNER = ToScriptHash("AUQ2cqRs2daQBqTFs6Zun8eYXRe4a9JZUC")

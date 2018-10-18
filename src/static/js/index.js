@@ -59,7 +59,9 @@ new Vue({
                 networkSelected: ['TestNet'],
                 accountOptions: [],
                 accountSelected: [],
-                b58AddressSelected: ''
+                b58AddressSelected: '',
+                contractAddress: '',
+                tokenName: ''
             }
         }
     },
@@ -239,10 +241,27 @@ new Vue({
                 });
             }
         },
+        async getContractAddress() {
+            let url = Flask.url_for('get_contract_address');
+            let response = await axios.get(url);
+            this.settingForm.contractAddress = response.data.result;
+        },
+        async getTokenName() {
+            let url = Flask.url_for("get_name");
+            try {
+                let response = await axios.get(url);
+                this.settingForm.contractName = response.data.result;
+            } catch (error) {
+                console.log(error);
+            }
+
+        },
         async tabClickHandler(tab, event) {
             if (tab.label === 'DApp Settings') {
                 if (this.isSwitchToSettings === true) {
                     await this.getAccounts();
+                    await this.getContractAddress();
+                    await this.getTokenName();
                     this.isSwitchToSettings = false;
                     if (this.settingForm.accountSelected.length === 0 && this.settingForm.accountOptions.length !== 0) {
                         let firstB58Address = this.settingForm.accountOptions[0].value;
@@ -497,6 +516,31 @@ new Vue({
                         duration: 2000
                     })
                 }
+            }
+        },
+        async changeContract() {
+            let hex_contract_address = await this.$prompt('Paste your oep4 contract address here:', 'Change Contract', {
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Cancel',
+                inputPattern: /^[a-zA-Z0-9]{40}$/,
+                inputErrorMessage: 'Cannot handle invalid contract address'
+            }).catch(() => {
+                this.$message.warning('Import canceled');
+            });
+            try {
+                let change_contract_url = Flask.url_for('set_contract_address');
+                let response = await axios.post(change_contract_url, {
+                    'contract_address': hex_contract_address
+                });
+                this.$message({
+                    type: 'success',
+                    message: 'change contract address successful!',
+                    duration: 2000
+                });
+                await this.getContractAddress();
+                await this.getTokenName();
+            } catch (error) {
+                console.log(error);
             }
         },
         async transfer() {

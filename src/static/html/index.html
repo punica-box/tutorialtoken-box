@@ -133,7 +133,7 @@
                                         type="primary"
                                         icon="el-icon-caret-right"
                                         round @click="transfer">
-                                    transfer
+                                    Transfer
                                 </el-button>
                             </el-row>
                         </div>
@@ -274,7 +274,7 @@
                 <el-col :span="2">
                     <div class="grid-content bg-purple">
                         <el-row>
-                            <el-button type="primary" round @click="approve">approve</el-button>
+                            <el-button type="primary" round @click="approve">Approve</el-button>
                         </el-row>
                     </div>
                 </el-col>
@@ -314,7 +314,7 @@
                 <el-col :span="2">
                     <div class="grid-content bg-purple">
                         <el-row>
-                            <el-button type="primary" round @click="allowance">allowance</el-button>
+                            <el-button type="primary" round @click="allowance">Allowance</el-button>
                         </el-row>
                     </div>
                 </el-col>
@@ -424,8 +424,38 @@
                             </el-input>
                         </el-col>
                     </el-row>
+
+                    <el-row :gutter="15">
+                        <el-col :span="14">
+                            <el-form-item label="Contract Address">
+                                <el-input
+                                        v-model="settingForm.contractAddress"
+                                        :disabled="true">
+                                    <template slot="prepend">0x</template>
+                                </el-input>
+                            </el-form-item>
+                        </el-col>
+
+                        <el-col :span="6">
+                            <el-input
+                                    v-model="settingForm.contractName"
+                                    :disabled="true">
+                            </el-input>
+                        </el-col>
+                        <el-col :span="4">
+                            <el-button
+                                    round
+                                    type="success"
+                                    icon="el-icon-caret-right"
+                                    @click.prevent="changeContract">
+                                Change Contract
+                            </el-button>
+                        </el-col>
+                    </el-row>
+
                 </el-form>
             </div>
+
             <div style="margin-bottom: 15px;">
                 <el-row :gutter="20">
                     <el-col :span="8">
