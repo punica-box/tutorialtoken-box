@@ -100,7 +100,13 @@ def remove_account():
 @app.route('/set_contract_address', methods=['POST'])
 def set_contract_address():
     contract_address = request.json.get('contract_address')
-    oep4.set_contract_address(contract_address)
+    oep4.set_contract_address(contract_address['value'])
+    return json.jsonify({'result': contract_address}), 200
+
+
+@app.route('/get_contract_address', methods=['GET'])
+def get_contract_address():
+    contract_address = oep4.get_contract_address()
     return json.jsonify({'result': contract_address}), 200
 
 
@@ -162,20 +168,29 @@ def get_smart_contract_event():
 
 @app.route('/get_name')
 def get_name():
-    name = oep4.get_name()
-    return json.jsonify({'result': name}), 200
+    try:
+        name = oep4.get_name()
+        return json.jsonify({'result': name}), 200
+    except RuntimeError as e:
+        return json.jsonify({'result': 'get name failed'}), 500
 
 
 @app.route('/get_symbol')
 def get_symbol():
-    symbol = oep4.get_symbol()
-    return json.jsonify({'result': symbol}), 200
+    try:
+        symbol = oep4.get_symbol()
+        return json.jsonify({'result': symbol}), 200
+    except RuntimeError as e:
+        return json.jsonify({'result': 'get symbol failed'}), 500
 
 
 @app.route('/get_decimal')
 def get_decimal():
-    decimal = oep4.get_decimal()
-    return json.jsonify({'result': decimal}), 200
+    try:
+        decimal = oep4.get_decimal()
+        return json.jsonify({'result': decimal}), 200
+    except RuntimeError as e:
+        return json.jsonify({'result': 'get decimal failed'}), 500
 
 
 @app.route('/query_balance', methods=['POST'])
