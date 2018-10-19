@@ -9,7 +9,9 @@ from ontology.exception.exception import SDKException
 from ontology.ont_sdk import OntologySdk
 from ontology.utils import util
 
-app = Flask('DXToken', static_folder='static', template_folder=os.path.join('static', 'html'))
+static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+template_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'html')
+app = Flask('DXToken', static_folder=static_folder, template_folder=template_folder)
 app.config.from_object('default_settings')
 jsglue = JSGlue()
 jsglue.init_app(app)
@@ -21,7 +23,8 @@ oep4.set_contract_address(app.config['DEFAULT_CONTRACT_ADDRESS'])
 gas_price = app.config['GAS_PRICE']
 gas_limit = app.config['GAS_LIMIT']
 wallet_manager = WalletManager()
-wallet_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'wallet', 'wallet.json')
+wallet_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'wallet', 'wallet.json')
+print(wallet_path)
 if os.path.isfile(wallet_path):
     wallet_manager.open_wallet(wallet_path)
 
@@ -100,12 +103,14 @@ def remove_account():
 @app.route('/set_contract_address', methods=['POST'])
 def set_contract_address():
     contract_address = request.json.get('contract_address')
+    global oep4
     oep4.set_contract_address(contract_address['value'])
     return json.jsonify({'result': contract_address}), 200
 
 
 @app.route('/get_contract_address', methods=['GET'])
 def get_contract_address():
+    global oep4
     contract_address = oep4.get_contract_address()
     return json.jsonify({'result': contract_address}), 200
 
@@ -207,11 +212,11 @@ def get_decimal():
 
 @app.route('/query_balance', methods=['POST'])
 def query_balance():
-    global oep4
     b58_address = request.json.get('b58_address')
     asset_select = request.json.get('asset_select')
     try:
         if asset_select == 'OEP4 Token':
+            global oep4
             balance = oep4.balance_of(b58_address)
             return json.jsonify({'result': balance}), 200
         elif asset_select == 'ONT':
@@ -239,6 +244,7 @@ def transfer():
     except IndexError:
         return json.jsonify({'result': 'Please import an account'}), 400
     except SDKException as e:
+        print(e)
         return json.jsonify({'result': e.args[1]}), 500
     return json.jsonify({'result': tx_hash}), 200
 
