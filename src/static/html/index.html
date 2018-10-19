@@ -21,71 +21,6 @@
 <body>
 <div id="vue-app" style="width:1200px; margin:auto">
     <el-tabs type="border-card" @tab-click="tabClickHandler">
-        <el-tab-pane label="Information Query">
-            <div style="margin-bottom: 15px;">
-                <el-row :gutter="20">
-                    <el-col :span="24">
-                        <el-input
-                                placeholder="Please input TxHash"
-                                type="string"
-                                v-model="eventKey"
-                                class="input-with-select">
-                            <el-select v-model="eventInfoSelect" slot="prepend" placeholder="Select">
-                                <el-option label="State" value="State"/>
-                                </el-option>
-                                <el-option label="GasConsumed" value="GasConsumed"></el-option>
-                                <el-option label="Notify" value="Notify"></el-option>
-                            </el-select>
-                            <el-button slot="append" icon="el-icon-search" @click="queryEvent"></el-button>
-                        </el-input>
-                    </el-col>
-                </el-row>
-            </div>
-
-            <div style="margin-bottom: 15px;">
-                <el-row :gutter="20">
-                    <el-col :span="24">
-                        <el-input
-                                placeholder="Please input base58 encode address"
-                                type="string"
-                                v-model="assetKey"
-                                class="input-with-select">
-                            <el-select v-model="assetSelect" slot="prepend" placeholder="Select">
-                                <el-option label="ONT" value="ONT"></el-option>
-                                <el-option label="ONG" value="ONG"></el-option>
-                                <el-option label="OEP4 Token" value="OEP4 Token"></el-option>
-                            </el-select>
-                            <el-button slot="append" icon="el-icon-search" @click="queryBalance"></el-button>
-                        </el-input>
-                    </el-col>
-                </el-row>
-            </div>
-
-            <el-row :gutter="20">
-                <el-col :span="8">
-                    <div class="grid-content bg-purple">
-                        <el-row>
-                            <el-button type="primary" round @click="getName">Token Name</el-button>
-                        </el-row>
-                    </div>
-                </el-col>
-                <el-col :span="8">
-                    <div class="grid-content bg-purple">
-                        <el-row>
-                            <el-button type="primary" round @click="getSymbol">Token Symbol</el-button>
-                        </el-row>
-                    </div>
-                </el-col>
-                <el-col :span="8">
-                    <div class="grid-content bg-purple">
-                        <el-row>
-                            <el-button type="primary" round @click="getDecimal">Token Decimal</el-button>
-                        </el-row>
-                    </div>
-                </el-col>
-            </el-row>
-        </el-tab-pane>
-
         <el-tab-pane label="Token Transfer">
             <el-form
                     :model="transferForm"
@@ -220,7 +155,7 @@
                             <el-button
                                     type="success"
                                     round @click="submitMultiTransferForm('multiTransferForm')">
-                                Submit
+                                Submit Transfer List
                             </el-button>
                         </el-col>
                         <el-col :span="8">
@@ -233,7 +168,7 @@
                         <el-col :span="8">
                             <el-button type="warning"
                                        round @click="resetMultiTransferForm('multiTransferForm')">
-                                Reset
+                                Reset Transfer List
                             </el-button>
                         </el-col>
                     </el-row>
@@ -320,6 +255,7 @@
                 </el-col>
             </el-row>
         </el-tab-pane>
+
         <el-tab-pane label="Token TransferFrom">
             <el-form
                     :model="transferFromForm"
@@ -389,6 +325,71 @@
                     </el-col>
                 </el-row>
             </el-form>
+        </el-tab-pane>
+
+        <el-tab-pane label="Information Query">
+            <div style="margin-bottom: 15px;">
+                <el-row :gutter="20">
+                    <el-col :span="24">
+                        <el-input
+                                placeholder="Please input TxHash"
+                                type="string"
+                                v-model="eventKey"
+                                class="input-with-select">
+                            <el-select v-model="eventInfoSelect" slot="prepend" placeholder="Select">
+                                <el-option label="State" value="State"/>
+                                </el-option>
+                                <el-option label="GasConsumed" value="GasConsumed"></el-option>
+                                <el-option label="Notify" value="Notify"></el-option>
+                            </el-select>
+                            <el-button slot="append" icon="el-icon-search" @click="queryEvent"></el-button>
+                        </el-input>
+                    </el-col>
+                </el-row>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <el-row :gutter="20">
+                    <el-col :span="24">
+                        <el-input
+                                placeholder="Please input base58 encode address"
+                                type="string"
+                                v-model="assetKey"
+                                class="input-with-select">
+                            <el-select v-model="assetSelect" slot="prepend" placeholder="Select">
+                                <el-option label="ONT" value="ONT"></el-option>
+                                <el-option label="ONG" value="ONG"></el-option>
+                                <el-option label="OEP4 Token" value="OEP4 Token"></el-option>
+                            </el-select>
+                            <el-button slot="append" icon="el-icon-search" @click="queryBalance"></el-button>
+                        </el-input>
+                    </el-col>
+                </el-row>
+            </div>
+
+            <el-row :gutter="20">
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-button type="primary" round @click="getName">Token Name</el-button>
+                        </el-row>
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-button type="primary" round @click="getSymbol">Token Symbol</el-button>
+                        </el-row>
+                    </div>
+                </el-col>
+                <el-col :span="8">
+                    <div class="grid-content bg-purple">
+                        <el-row>
+                            <el-button type="primary" round @click="getDecimal">Token Decimal</el-button>
+                        </el-row>
+                    </div>
+                </el-col>
+            </el-row>
         </el-tab-pane>
 
         <el-tab-pane label="DApp Settings">

@@ -1,4 +1,3 @@
 Flask
 Flask-JSGlue
 ontology-python-sdk
-selenium

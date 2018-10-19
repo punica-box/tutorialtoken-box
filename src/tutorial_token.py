@@ -158,7 +158,10 @@ def change_net():
 def get_smart_contract_event():
     tx_hash = request.json.get('tx_hash')
     event_info_select = request.json.get('event_info_select')
-    event = sdk.rpc.get_smart_contract_event_by_tx_hash(tx_hash)
+    try:
+        event = sdk.rpc.get_smart_contract_event_by_tx_hash(tx_hash)
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
     try:
         result = event[event_info_select]
     except KeyError:
@@ -169,45 +172,58 @@ def get_smart_contract_event():
 @app.route('/get_name')
 def get_name():
     try:
+        global oep4
         name = oep4.get_name()
         return json.jsonify({'result': name}), 200
-    except RuntimeError as e:
+    except RuntimeError:
         return json.jsonify({'result': 'get name failed'}), 500
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
 
 
 @app.route('/get_symbol')
 def get_symbol():
     try:
+        global oep4
         symbol = oep4.get_symbol()
         return json.jsonify({'result': symbol}), 200
-    except RuntimeError as e:
+    except RuntimeError:
         return json.jsonify({'result': 'get symbol failed'}), 500
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
 
 
 @app.route('/get_decimal')
 def get_decimal():
     try:
+        global oep4
         decimal = oep4.get_decimal()
         return json.jsonify({'result': decimal}), 200
-    except RuntimeError as e:
+    except RuntimeError:
         return json.jsonify({'result': 'get decimal failed'}), 500
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
 
 
 @app.route('/query_balance', methods=['POST'])
 def query_balance():
+    global oep4
     b58_address = request.json.get('b58_address')
     asset_select = request.json.get('asset_select')
-    if asset_select == 'OEP4 Token':
-        balance = oep4.balance_of(b58_address)
-        return json.jsonify({'result': balance}), 200
-    elif asset_select == 'ONT':
-        balance = sdk.rpc.get_balance(b58_address)
-        return json.jsonify({'result': balance['ont']}), 200
-    elif asset_select == 'ONG':
-        balance = sdk.rpc.get_balance(b58_address)
-        return json.jsonify({'result': balance['ong']}), 200
-    else:
-        return json.jsonify({'result': 'query balance failed'}), 500
+    try:
+        if asset_select == 'OEP4 Token':
+            balance = oep4.balance_of(b58_address)
+            return json.jsonify({'result': balance}), 200
+        elif asset_select == 'ONT':
+            balance = sdk.rpc.get_balance(b58_address)
+            return json.jsonify({'result': balance['ont']}), 200
+        elif asset_select == 'ONG':
+            balance = sdk.rpc.get_balance(b58_address)
+            return json.jsonify({'result': balance['ong']}), 200
+        else:
+            return json.jsonify({'result': 'query balance failed'}), 500
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
 
 
 @app.route('/transfer', methods=['POST'])
@@ -218,9 +234,12 @@ def transfer():
     try:
         b58_from_address = wallet_manager.get_default_account().get_address()
         from_acct = wallet_manager.get_account(b58_from_address, password)
+        global oep4
         tx_hash = oep4.transfer(from_acct, b58_to_address, amount, from_acct, gas_limit, gas_price)
     except IndexError:
         return json.jsonify({'result': 'Please import an account'}), 400
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
     return json.jsonify({'result': tx_hash}), 200
 
 
@@ -233,7 +252,11 @@ def transfer_multi():
     for (item, password) in zip(args, password_array):
         account = wallet_manager.get_account(item[0], password)
         signers.append(account)
-    tx_hash = oep4.transfer_multi(args, signers[0], signers, gas_limit, gas_price)
+    global oep4
+    try:
+        tx_hash = oep4.transfer_multi(args, signers[0], signers, gas_limit, gas_price)
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
     return json.jsonify({'result': tx_hash}), 200
 
 
@@ -245,9 +268,12 @@ def approve():
     try:
         b58_from_address = wallet_manager.get_default_account().get_address()
         default_acct = wallet_manager.get_account(b58_from_address, password)
+        global oep4
         tx_hash = oep4.approve(default_acct, b58_spender_address, amount, default_acct, gas_limit, gas_price)
     except IndexError:
         return json.jsonify({'result': 'Please import an account'}), 400
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
     return json.jsonify({'result': tx_hash}), 200
 
 
@@ -259,7 +285,11 @@ def transfer_from():
     b58_to_address = request.json.get('b58_to_address')
     amount = int(request.json.get('amount'))
     spender = wallet_manager.get_account(b58_spender_address, password)
-    tx_hash = oep4.transfer_from(spender, b58_from_address, b58_to_address, amount, spender, gas_limit, gas_price)
+    global oep4
+    try:
+        tx_hash = oep4.transfer_from(spender, b58_from_address, b58_to_address, amount, spender, gas_limit, gas_price)
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
     return json.jsonify({'result': tx_hash}), 200
 
 
@@ -267,7 +297,11 @@ def transfer_from():
 def allowance():
     b58_owner_address = request.json.get('b58_owner_address')
     b58_spender_address = request.json.get('b58_spender_address')
-    result = oep4.allowance(b58_owner_address, b58_spender_address)
+    try:
+        global oep4
+        result = oep4.allowance(b58_owner_address, b58_spender_address)
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
     return json.jsonify({'result': result}), 200
 
 

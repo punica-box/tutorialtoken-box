@@ -10,7 +10,7 @@ new Vue({
             assetSelect: '',
             assetKey: '',
             transferForm: {
-                inputTransferTo: '',
+                inputTransferTo: 'AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve',
                 inputTransferAmount: '',
             },
             transferFormRules: {
