@@ -88,6 +88,7 @@ new Vue({
                             confirmButtonText: 'OK',
                             cancelButtonText: 'Cancel',
                             inputPattern: /\S{1,}/,
+                            inputType: 'password',
                             inputErrorMessage: 'invalid password'
                         });
                         password = password.value;
@@ -180,7 +181,6 @@ new Vue({
                 message: this.assetSelect.concat(' Balance: ', response.data.result),
                 type: 'success'
             });
-            console.log(response);
         },
         async getName() {
             try {
@@ -289,6 +289,7 @@ new Vue({
                     confirmButtonText: 'OK',
                     cancelButtonText: 'Cancel',
                     inputPattern: /\S{1,}/,
+                    inputType: 'password',
                     inputErrorMessage: 'invalid password'
                 });
                 password = password.value;
@@ -376,7 +377,8 @@ new Vue({
             }
             let password = await this.$prompt('Account Password', 'Import Account', {
                 confirmButtonText: 'OK',
-                cancelButtonText: 'Cancel'
+                cancelButtonText: 'Cancel',
+                inputType: 'password',
             }).catch(() => {
                 this.$message.warning('Import canceled');
             });
@@ -413,6 +415,7 @@ new Vue({
                     confirmButtonText: 'OK',
                     cancelButtonText: 'Cancel',
                     inputPattern: /\S{1,}/,
+                    inputType: 'password',
                     inputErrorMessage: 'invalid password'
                 });
                 password = password.value;
@@ -551,6 +554,7 @@ new Vue({
                         confirmButtonText: 'OK',
                         cancelButtonText: 'Cancel',
                         inputPattern: /\S{1,}/,
+                        inputType: 'password',
                         inputErrorMessage: 'invalid password'
                     });
                     password = password.value;
@@ -673,6 +677,7 @@ new Vue({
             let password = await this.$prompt('Account Password', 'Approve', {
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
+                inputType: 'password',
                 inputPattern: /\S{1,}/,
                 inputErrorMessage: 'invalid password'
             }).catch(() => {
@@ -711,6 +716,7 @@ new Vue({
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
                 inputPattern: /\S{1,}/,
+                inputType: 'password',
                 inputErrorMessage: 'invalid password'
             }).catch(() => {
                 this.$message.warning('Import canceled');

@@ -24,7 +24,6 @@ gas_price = app.config['GAS_PRICE']
 gas_limit = app.config['GAS_LIMIT']
 wallet_manager = WalletManager()
 wallet_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'wallet', 'wallet.json')
-print(wallet_path)
 if os.path.isfile(wallet_path):
     wallet_manager.open_wallet(wallet_path)
 
@@ -218,13 +217,13 @@ def query_balance():
         if asset_select == 'OEP4 Token':
             global oep4
             balance = oep4.balance_of(b58_address)
-            return json.jsonify({'result': balance}), 200
+            return json.jsonify({'result': str(balance)}), 200
         elif asset_select == 'ONT':
             balance = sdk.rpc.get_balance(b58_address)
-            return json.jsonify({'result': balance['ont']}), 200
+            return json.jsonify({'result': str(balance['ont'])}), 200
         elif asset_select == 'ONG':
             balance = sdk.rpc.get_balance(b58_address)
-            return json.jsonify({'result': balance['ong']}), 200
+            return json.jsonify({'result': str(balance['ong'])}), 200
         else:
             return json.jsonify({'result': 'query balance failed'}), 500
     except SDKException as e:
