@@ -21,35 +21,47 @@
       "defaultSigner": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
       "gasPrice": 0,
       "gasLimit": 21000000,
-      "functions": {
-          "Name": {
+      "functions": [
+          {
+              "name":"Init",
               "params": {},
               "signers": {},
               "preExec": true
           },
-          "Symbol": {
+          {
+              "name":"Name",
               "params": {},
               "signers": {},
               "preExec": true
           },
-          "Decimal": {
+          {
+              "name":"Symbol",
               "params": {},
               "signers": {},
               "preExec": true
           },
-          "TotalSupply": {
+          {
+              "name":"Decimal",
               "params": {},
               "signers": {},
               "preExec": true
           },
-          "BalanceOf": {
+          {
+              "name":"TotalSupply",
+              "params": {},
+              "signers": {},
+              "preExec": true
+          },
+          {
+              "name":"BalanceOf",
               "params": {
                   "account": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
               },
               "signers": {},
               "preExec": true
           },
-          "Transfer": {
+          {
+              "name":"Transfer",
               "params": {
                   "from_acct": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
                   "to_acct": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
@@ -63,7 +75,8 @@
               },
               "preExec": false
           },
-          "TransferMulti": {
+          {
+              "name":"TransferMulti",
               "params": {
                   "args": [
                       {
@@ -88,7 +101,8 @@
               "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
               "preExec": false
           },
-          "Allowance": {
+          {
+              "name":"Allowance",
               "params": {
                   "owner": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
                   "spender": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
@@ -101,7 +115,8 @@
               },
               "preExec": false
           },
-          "TransferFrom": {
+          {
+              "name":"TransferFrom",
               "params": {
                   "sender": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
                   "from_acct": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
@@ -114,12 +129,8 @@
               },
               "preExec": false
           },
-          "Init": {
-              "params": {},
-              "signers": {},
-              "preExec": true
-          },
-          "Approve": {
+          {
+              "name":"Approve",
               "params": {
                   "owner": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
                   "spender": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
@@ -131,6 +142,6 @@
               },
               "preExec": true
           }
-      }
+      ]
   }
 }
