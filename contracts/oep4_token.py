@@ -86,7 +86,7 @@ def init():
         return True
 
 
-def main(operation, args):
+def Main(operation, args):
     """
     :param operation:
     :param args:
