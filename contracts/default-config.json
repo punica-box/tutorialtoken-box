@@ -41,7 +41,7 @@
               "preExec": true
           },
           {
-              "name":"decimal",
+              "name":"decimals",
               "params": {},
               "signers": {},
               "preExec": true
