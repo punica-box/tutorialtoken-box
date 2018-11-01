@@ -23,37 +23,37 @@
       "gasLimit": 21000000,
       "functions": [
           {
-              "name":"Init",
+              "name":"init",
               "params": {},
               "signers": {},
               "preExec": true
           },
           {
-              "name":"Name",
+              "name":"name",
               "params": {},
               "signers": {},
               "preExec": true
           },
           {
-              "name":"Symbol",
+              "name":"symbol",
               "params": {},
               "signers": {},
               "preExec": true
           },
           {
-              "name":"Decimal",
+              "name":"decimal",
               "params": {},
               "signers": {},
               "preExec": true
           },
           {
-              "name":"TotalSupply",
+              "name":"totalSupply",
               "params": {},
               "signers": {},
               "preExec": true
           },
           {
-              "name":"BalanceOf",
+              "name":"balanceOf",
               "params": {
                   "account": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
               },
@@ -61,7 +61,7 @@
               "preExec": true
           },
           {
-              "name":"Transfer",
+              "name":"transfer",
               "params": {
                   "from_acct": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
                   "to_acct": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
@@ -76,7 +76,7 @@
               "preExec": false
           },
           {
-              "name":"TransferMulti",
+              "name":"transferMulti",
               "params": {
                   "args": [
                       {
@@ -102,7 +102,7 @@
               "preExec": false
           },
           {
-              "name":"Allowance",
+              "name":"allowance",
               "params": {
                   "owner": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
                   "spender": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
@@ -116,7 +116,7 @@
               "preExec": false
           },
           {
-              "name":"TransferFrom",
+              "name":"transferFrom",
               "params": {
                   "sender": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
                   "from_acct": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
@@ -130,7 +130,7 @@
               "preExec": false
           },
           {
-              "name":"Approve",
+              "name":"approve",
               "params": {
                   "owner": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
                   "spender": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
