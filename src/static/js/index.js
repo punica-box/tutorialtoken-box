@@ -766,6 +766,7 @@ new Vue({
                 this.newHexPrivateKey = response.data.hex_private_key;
                 this.privateKeyDialogVisible = true;
                 await this.getAccounts();
+                this.newHexPrivateKey = ''
             } catch (error) {
                 console.log(error);
             }
