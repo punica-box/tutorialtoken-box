@@ -56,7 +56,8 @@
               "operation": "balanceOf",
               "args": [
                   {
-                      "account": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                      "name":"account",
+                      "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   }
               ],
               "signers": {},
@@ -66,13 +67,16 @@
               "operation": "transfer",
               "args": [
                   {
-                      "from_acct": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                      "name":"from_acct",
+                      "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   },
                   {
-                      "to_acct": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                      "name":"to_acct",
+                      "value": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
                   },
                   {
-                      "amount": 1
+                      "name":"amount",
+                      "value": 1
                   }
               ],
               "signers": {
@@ -87,16 +91,18 @@
               "operation": "transferMulti",
               "args": [
                   {
-                      "state": [
+                     "name":"state",
+                      "value": [
                           "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
                           "ByteArray:ARLvwmvJ38stT9MKD78YtpDak3MENZkoxF",
                           1
                       ]
                   },
                   {
-                      "state": [
+                      "name":"state",
+                      "value": [
+                          "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
                           "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
-                          "ByteArray:ARLvwmvJ38stT9MKD78YtpDak3MENZkoxF",
                           1
                       ]
                   }
@@ -104,8 +110,7 @@
               "signers": {
                   "m": 1,
                   "signer": [
-                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                      "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   ]
               },
               "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
@@ -115,10 +120,12 @@
               "operation": "allowance",
               "args": [
                   {
-                      "owner": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                      "name":"owner",
+                      "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   },
                   {
-                      "spender": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                      "name":"spender",
+                      "value": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
                   }
               ],
               "signers": {
@@ -133,16 +140,20 @@
               "operation": "transferFrom",
               "args": [
                   {
-                      "sender": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                      "name":"sender",
+                      "value": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
                   },
                   {
-                      "from_acct": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                      "name":"from_acct",
+                      "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   },
                   {
-                      "to_acct": "ByteArray:Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1"
+                      "name":"to_acct",
+                      "value": "ByteArray:Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1"
                   },
                   {
-                      "amount": 1
+                      "name":"amount",
+                      "value": 1
                   }
               ],
               "signers": {
@@ -157,13 +168,16 @@
               "operation": "approve",
               "args": [
                   {
-                      "owner": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                      "name":"owner",
+                      "value": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
                   },
                   {
-                      "spender": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                      "name":"spender",
+                      "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   },
                   {
-                      "amount": 1
+                      "name":"amount",
+                      "value": 1
                   }
               ],
               "signers": {
@@ -175,5 +189,5 @@
               "preExec": false
           }
       ]
-  }
+    }
 }
