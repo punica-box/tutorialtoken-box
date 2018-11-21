@@ -13,7 +13,7 @@ NAME = 'DXToken'
 SYMBOL = 'DX'
 DECIMALS = 10
 TOTAL_AMOUNT = 1000000000
-OWNER = ToScriptHash("AUQ2cqRs2daQBqTFs6Zun8eYXRe4a9JZUC")
+OWNER = ToScriptHash("ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6")
 
 BALANCE_PREFIX = b'\x01'
 APPROVE_PREFIX = b'\x02'
@@ -309,7 +309,7 @@ def allowance(owner,spender):
     """
     key = concat(concat(APPROVE_PREFIX,owner),spender)
     return Get(ctx,key)
-    
+
 def Revert():
     """
     Revert the transaction. The opcodes of this function is `09f7f6f5f4f3f2f1f000f0`,

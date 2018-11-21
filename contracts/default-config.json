@@ -12,13 +12,14 @@
     "desc": "A tutorial token based on Ontology Blockchain",
     "needStorage": true,
     "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-    "gasPrice": 500,
+    "gasPrice": 0,
     "gasLimit": 21000000
   },
   "invokeConfig": {
       "abi": "oep4_token_abi.json",
       "defaultPayer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
       "defaultSigner": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+      "sleepTime":10,
       "gasPrice": 0,
       "gasLimit": 21000000,
       "functions": [
