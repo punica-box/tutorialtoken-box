@@ -13,5 +13,5 @@
       "port": 20336
     }
   },
-  "defaultNet":"testNet"
+  "defaultNet":"privateNet"
 }
