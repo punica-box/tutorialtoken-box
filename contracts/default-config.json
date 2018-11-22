@@ -26,31 +26,31 @@
           {
               "operation": "init",
               "args": [],
-              "signers": {},
+              "signature": {},
               "preExec": false
           },
           {
               "operation": "name",
               "args": [],
-              "signers": {},
+              "signature": {},
               "preExec": true
           },
           {
               "operation": "symbol",
               "args": [],
-              "signers": {},
+              "signature": {},
               "preExec": true
           },
           {
               "operation": "decimals",
               "args": [],
-              "signers": {},
+              "signature": {},
               "preExec": true
           },
           {
               "operation": "totalSupply",
               "args": [],
-              "signers": {},
+              "signature": {},
               "preExec": true
           },
           {
@@ -61,7 +61,7 @@
                       "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   }
               ],
-              "signers": {},
+              "signature": {},
               "preExec": true
           },
           {
@@ -80,9 +80,9 @@
                       "value": 1
                   }
               ],
-              "signers": {
+              "signature": {
                   "m": 1,
-                  "signer": [
+                  "signers": [
                       "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   ]
               },
@@ -108,9 +108,9 @@
                       ]
                   }
               ],
-              "signers": {
+              "signature": {
                   "m": 1,
-                  "signer": [
+                  "signers": [
                       "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   ]
               },
@@ -129,9 +129,9 @@
                       "value": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
                   }
               ],
-              "signers": {
+              "signature": {
                   "m": 1,
-                  "signer": [
+                  "signers": [
                       "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   ]
               },
@@ -157,9 +157,9 @@
                       "value": 1
                   }
               ],
-              "signers": {
+              "signature": {
                   "m": 1,
-                  "signer": [
+                  "signers": [
                       "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   ]
               },
@@ -181,9 +181,9 @@
                       "value": 1
                   }
               ],
-              "signers": {
+              "signature": {
                   "m": 1,
-                  "signer": [
+                  "signers": [
                       "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   ]
               },
