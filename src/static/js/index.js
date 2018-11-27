@@ -101,7 +101,8 @@ new Vue({
                             confirmButtonText: 'Confirm',
                             cancelButtonText: 'Cancel',
                             type: 'warning',
-                            duration: 0
+                            closeOnClickModal: false,
+                            closeOnPressEscape: true
                         });
                     } catch (error) {
                         this.$message({
@@ -124,16 +125,14 @@ new Vue({
                                 message: 'Transfer successfully： '.concat(tx_hash).concat('!'),
                                 duration: 2000
                             });
-                        }
-                        else {
+                        } else {
                             this.$message({
                                 type: 'error',
                                 message: 'Transfer failed!',
                                 duration: 800
                             });
                         }
-                    }
-                    catch (error) {
+                    } catch (error) {
                         console.log(error);
                     }
                 } else {
@@ -206,8 +205,7 @@ new Vue({
                     message: response.data.result,
                     duration: 0
                 });
-            }
-            catch (error) {
+            } catch (error) {
                 console.log(error);
             }
         },
@@ -268,16 +266,13 @@ new Vue({
                         this.settingForm.b58AddressSelected = firstB58Address;
                     }
                 }
-            }
-            else if (tab.label === 'Token TransferMulti') {
+            } else if (tab.label === 'Token TransferMulti') {
                 this.isSwitchToSettings = true;
                 await this.getAccounts();
-            }
-            else if (tab.label === 'Token TransferFrom') {
+            } else if (tab.label === 'Token TransferFrom') {
                 this.isSwitchToSettings = true;
                 await this.getAccounts();
-            }
-            else {
+            } else {
                 this.isSwitchToSettings = true;
             }
         },
@@ -289,14 +284,17 @@ new Vue({
                     cancelButtonText: 'Cancel',
                     inputPattern: /\S{1,}/,
                     inputType: 'password',
-                    inputErrorMessage: 'invalid password'
+                    inputErrorMessage: 'invalid password',
+                    closeOnClickModal: false,
+                    closeOnPressEscape: true
                 });
                 password = password.value;
                 await this.$confirm('This will transfer token. Continue?', 'Warning', {
                     confirmButtonText: 'Confirm',
                     cancelButtonText: 'Cancel',
                     type: 'warning',
-                    duration: 0
+                    closeOnClickModal: false,
+                    closeOnPressEscape: true
                 });
             } catch (error) {
                 this.$message({
@@ -322,8 +320,7 @@ new Vue({
                         message: 'Transfer successfully： '.concat(tx_hash).concat('!'),
                         duration: 2000
                     });
-                }
-                else {
+                } else {
                     this.$message({
                         type: 'error',
                         message: 'Transfer failed!',
@@ -338,8 +335,7 @@ new Vue({
                         message: error.response.data.result,
                         duration: 4000
                     });
-                }
-                else {
+                } else {
                     console.log(error);
                 }
             }
@@ -354,8 +350,7 @@ new Vue({
                     message: response.data.result,
                     duration: 1200
                 });
-            }
-            catch (error) {
+            } catch (error) {
                 this.$message({
                     message: error.response.data.result,
                     type: 'error',
@@ -368,7 +363,9 @@ new Vue({
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
                 inputPattern: /^[a-zA-Z0-9]{64}$/,
-                inputErrorMessage: 'Cannot import invalid private key'
+                inputErrorMessage: 'Cannot import invalid private key',
+                closeOnClickModal: false,
+                closeOnPressEscape: true
             }).catch(() => {
                 this.$message.warning('Import canceled');
             });
@@ -378,6 +375,8 @@ new Vue({
             let label = await this.$prompt('Account Label:', 'Import Account', {
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
+                closeOnClickModal: false,
+                closeOnPressEscape: true
             }).catch(() => {
                 this.$message.warning('Import canceled');
             });
@@ -388,6 +387,8 @@ new Vue({
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
                 inputType: 'password',
+                closeOnClickModal: false,
+                closeOnPressEscape: true
             }).catch(() => {
                 this.$message.warning('Import canceled');
             });
@@ -406,8 +407,7 @@ new Vue({
                     message: 'Import successful',
                     duration: 1200
                 });
-            }
-            catch (error) {
+            } catch (error) {
                 if (error.response.status === 409) {
                     this.$message({
                         message: error.response.data.result,
@@ -425,7 +425,9 @@ new Vue({
                     cancelButtonText: 'Cancel',
                     inputPattern: /\S{1,}/,
                     inputType: 'password',
-                    inputErrorMessage: 'invalid password'
+                    inputErrorMessage: 'invalid password',
+                    closeOnClickModal: false,
+                    closeOnPressEscape: true
                 });
                 password = password.value;
             } catch (error) {
@@ -465,14 +467,11 @@ new Vue({
             let msg = '';
             if (value[0] === 'MainNet') {
                 msg = 'Connecting to Main Network'
-            }
-            else if (value[0] === 'TestNet') {
+            } else if (value[0] === 'TestNet') {
                 msg = 'Connecting to Polaris Test Network'
-            }
-            else if (value[0] === 'Localhost') {
+            } else if (value[0] === 'Localhost') {
                 msg = 'Connecting to Localhost'
-            }
-            else {
+            } else {
                 return
             }
             let change_net_url = Flask.url_for('change_net');
@@ -495,32 +494,28 @@ new Vue({
                         message: error.response.data.result,
                         duration: 2000
                     })
-                }
-                else if (error.response.status === 409) {
+                } else if (error.response.status === 409) {
                     this.$notify({
                         title: 'Network Change',
                         type: 'warning',
                         message: error.response.data.result,
                         duration: 2000
                     })
-                }
-                else if (error.response.status === 500) {
+                } else if (error.response.status === 500) {
                     this.$notify({
                         title: 'Network Change',
                         type: 'warning',
                         message: error.response.data.result,
                         duration: 2000
                     })
-                }
-                else if (error.response.status === 501) {
+                } else if (error.response.status === 501) {
                     this.$notify({
                         title: 'Network Change',
                         type: 'warning',
                         message: error.response.data.result,
                         duration: 2000
                     })
-                }
-                else {
+                } else {
                     this.$notify({
                         title: 'Network Change',
                         type: 'error',
@@ -535,7 +530,9 @@ new Vue({
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
                 inputPattern: /^[a-zA-Z0-9]{40}$/,
-                inputErrorMessage: 'Cannot handle invalid contract address'
+                inputErrorMessage: 'Cannot handle invalid contract address',
+                closeOnClickModal: false,
+                closeOnPressEscape: true
             }).catch(() => {
                 this.$message.warning('Import canceled');
             });
@@ -564,14 +561,17 @@ new Vue({
                         cancelButtonText: 'Cancel',
                         inputPattern: /\S{1,}/,
                         inputType: 'password',
-                        inputErrorMessage: 'invalid password'
+                        inputErrorMessage: 'invalid password',
+                        closeOnClickModal: false,
+                        closeOnPressEscape: true
                     });
                     password = password.value;
                     await this.$confirm('This will transfer token. Continue?', 'Warning', {
                         confirmButtonText: 'Confirm',
                         cancelButtonText: 'Cancel',
                         type: 'warning',
-                        duration: 0
+                        closeOnClickModal: false,
+                        closeOnPressEscape: true
                     });
                 } catch (error) {
                     this.$message({
@@ -595,8 +595,7 @@ new Vue({
                             message: 'Transfer successfully： '.concat(tx_hash).concat('!'),
                             duration: 2000
                         });
-                    }
-                    else {
+                    } else {
                         this.$message({
                             type: 'error',
                             message: 'Transfer failed!',
@@ -611,13 +610,11 @@ new Vue({
                             message: error.response.data.result,
                             duration: 4000
                         });
-                    }
-                    else {
+                    } else {
                         console.log(error);
                     }
                 }
-            }
-            else {
+            } else {
                 this.$notify({
                     title: "Amount Error",
                     type: 'warning',
@@ -659,8 +656,7 @@ new Vue({
                             message: '0',
                             duration: 0
                         });
-                    }
-                    else {
+                    } else {
                         this.$notify({
                             title: 'Allowance',
                             type: 'success',
@@ -676,8 +672,7 @@ new Vue({
                             message: error.response.data.result,
                             duration: 4000
                         });
-                    }
-                    else {
+                    } else {
                         this.$notify({
                             title: 'Query failed!',
                             type: 'error',
@@ -686,8 +681,7 @@ new Vue({
                         });
                     }
                 }
-            }
-            else {
+            } else {
                 this.$notify({
                     title: "Transfer Error",
                     type: 'error',
@@ -702,7 +696,9 @@ new Vue({
                 cancelButtonText: 'Cancel',
                 inputType: 'password',
                 inputPattern: /\S{1,}/,
-                inputErrorMessage: 'invalid password'
+                inputErrorMessage: 'invalid password',
+                closeOnClickModal: false,
+                closeOnPressEscape: true
             }).catch(() => {
                 this.$message.warning('Approve canceled');
             });
@@ -727,8 +723,7 @@ new Vue({
                         message: error.response.data.result,
                         duration: 4000
                     });
-                }
-                else {
+                } else {
                     console.log(error);
                 }
             }
@@ -738,7 +733,9 @@ new Vue({
                 confirmButtonText: 'OK',
                 cancelButtonText: 'Cancel',
                 inputPattern: /\S{1,}/,
-                inputErrorMessage: 'invalid label'
+                inputErrorMessage: 'invalid label',
+                closeOnClickModal: false,
+                closeOnPressEscape: true
             }).catch(() => {
                 this.$message.warning('Import canceled');
             });
@@ -750,7 +747,9 @@ new Vue({
                 cancelButtonText: 'Cancel',
                 inputPattern: /\S{1,}/,
                 inputType: 'password',
-                inputErrorMessage: 'invalid password'
+                inputErrorMessage: 'invalid password',
+                closeOnClickModal: false,
+                closeOnPressEscape: true
             }).catch(() => {
                 this.$message.warning('Import canceled');
             });
@@ -806,8 +805,7 @@ new Vue({
                             type: 'error',
                             duration: 800
                         })
-                    }
-                    else {
+                    } else {
                         if (this.eventInfoSelect === 'Notify') {
                             this.$alert(result, 'Query Result', {
                                 confirmButtonText: 'OK',
@@ -822,8 +820,7 @@ new Vue({
                             });
                         }
                     }
-                }
-                catch (error) {
+                } catch (error) {
                     this.$message({
                         message: 'query failed!',
                         type: 'error',
