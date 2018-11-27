@@ -6,9 +6,9 @@
 - [2. Architecture](#2-architecture)
 - [3. Setting up the development environment](#3-setting-up-the-development-environment)
 - [4. Getting started](#4-getting-started)
-    - [4.1. what's the Punica](#41-whats-the-punica)
+    - [4.1. what's the Punica Suite](#41-whats-the-punica-suite)
     - [4.2. what's the Punica Box](#42-whats-the-punica-box)
-    - [4.3. Unboxing the DApp](#43-unboxing-the-dapp)
+    - [4.3. Unboxing the dApp](#43-unboxing-the-dapp)
     - [4.4. Creating Smart Contract](#44-creating-smart-contract)
     - [4.5. Implement the Interface of OEP4 Contract](#45-implement-the-interface-of-oep4-contract)
         - [4.5.1. Support Getting the Parameters of Token](#451-support-getting-the-parameters-of-token)
@@ -18,15 +18,15 @@
         - [4.7.1. Transfer](#471-transfer)
         - [4.7.2. TransferMulti](#472-transfermulti)
         - [4.7.3. TransferFrom](#473-transferfrom)
-- [5. Run your DApp](#5-run-your-dapp)
-- [6. Use your DApp](#6-use-your-dapp)
+- [5. Run your dApp](#5-run-your-dapp)
+- [6. Use your dApp](#6-use-your-dapp)
     - [6.1. Information Query](#61-information-query)
     - [6.2. Token Transfer](#62-token-transfer)
     - [6.3. Token TransferMulti](#63-token-transfermulti)
     - [6.4. Token Approve](#64-token-approve)
     - [6.5. Token Allowance](#65-token-allowance)
     - [6.6. Token TransferFrom](#66-token-transferfrom)
-    - [6.7. DApp Settings](#67-dapp-settings)
+    - [6.7. dApp Settings](#67-dapp-settings)
 
 <!-- /TOC -->
 
@@ -65,9 +65,13 @@ There are a few technical requirements before we start. Please install the follo
 
 ## 4. Getting started
 
-### 4.1. what's the Punica
+### 4.1. what's the Punica Suite
 
-Punica is a Ontology DApp Development Framework, which has (almost) everything you need for Ontology DApp development.
+Punica is a Ontology dApp Development Framework, which has (almost) everything you need for Ontology dApp development.
+
+Now, we have Punica CLI, Punica Box and Solo Chain in our Punica Suite. More powerful dApp development tools is on the road.
+
+![punicaSuite](img/punicaSuite.png)
 
 ### 4.2. what's the Punica Box
 
@@ -79,7 +83,7 @@ Punica Box is an example Ontology application and/or boilerplate that puts compl
 
 Before we begin a wonderful journey, ensure you've installed the latest version of OBox before opening your first box.
 
-### 4.3. Unboxing the DApp
+### 4.3. Unboxing the dApp
 
 Install Punica.
 
@@ -87,16 +91,22 @@ Install Punica.
 pip install punica
 ```
 
-Download the tutorialtoken box.
+Download the interplanetary-album box.
 
 ```shell
-punica unbox tutorialtoken
+punica unbox interplanetary-album
 ```
 
 Create virtual environments(optional).
 
 ```shell
 virtualenv --no-site-packages venv
+```
+
+If you choose to create a virtual environment, you may need to activate your project's virtual environment.
+
+```shell
+.\venv\scripts\activate
 ```
 
 Install the necessary dependencies.
@@ -304,21 +314,21 @@ def TransferFrom(sender, from_acct, to_acct, amount):
     return True
 ```
 
-## 5. Run your DApp
+## 5. Run your dApp
 
-At this point, you can run the DApp in your browser:
+At this point, you can run the dApp in your browser:
 
 ```shell
 python tutorial_token.py
 ```
 
-- If everything goes smoothly, your DApp will run on http://127.0.0.1:5001/. 
+- If everything goes smoothly, your dApp will run on http://127.0.0.1:5001/. 
 
 - If you want to quit it, you can press CTRL+C or close the terminal.
 
 ![Token Dapp](img/DXTokenDapp.png)
 
-## 6. Use your DApp
+## 6. Use your dApp
 
 ### 6.1. Information Query
 
@@ -536,7 +546,7 @@ To confirm our approve transaction, we need to provide account's password, which
 ]
 ```
 
-### 6.7. DApp Settings
+### 6.7. dApp Settings
 
 When you select this tab, you can see the following interface:
 
@@ -544,7 +554,7 @@ When you select this tab, you can see the following interface:
 
 - **Select Default Network**
 
-As a tutorial project, we provide an example about how to support different network in a DApp, such as main network, test network and local network.
+As a tutorial project, we provide an example about how to support different network in a dApp, such as main network, test network and local network.
 
 ![selectNet1](img/selectNet1.png)
 
@@ -560,17 +570,17 @@ For more details, you can visit [Ontology](https://github.com/ontio/ontology).
 
 - **Select Default Account**
 
-As a tutorial project, we provide an example about how to support multi wallet account management in a DApp.
+As a tutorial project, we provide an example about how to support multi wallet account management in a dApp.
 
 ![electDefaultAccount1](img/selectDefaultAccount1.png)
 
-In our tutorial project, when the DApp start, it will read the wallet file in your computer, then initialize the wallet account for you.
+In our tutorial project, when the dApp start, it will read the wallet file in your computer, then initialize the wallet account for you.
 
 ![selectDefaultAccount2](img/selectDefaultAccount2.png)
 
 - **Create Account**
 
-As a tutorial project, we provide an example about how to create new account in a DApp.
+As a tutorial project, we provide an example about how to create new account in a dApp.
 
 In our tutorial project, you **must** input a label for your account, which is a basic way to help your identify different accounts.
 
@@ -598,7 +608,7 @@ Now, you can switch to your new accout.
 
 - **Import Account**
 
-As a tutorial project, we provide an example about how to import a account into a DApp  based on hexadecimal private key.
+As a tutorial project, we provide an example about how to import a account into a dApp  based on hexadecimal private key.
 
 In our tutorial project, you should paste a private key string into the input box.
 
@@ -626,7 +636,7 @@ Now, you can get your new account's base58 encode address in the following box.
 
 - **Remove Account**
 
-As a tutorial project, we provide an example about how to remove a account from a DApp based on ontology-python-sdk.
+As a tutorial project, we provide an example about how to remove a account from a dApp based on ontology-python-sdk.
 
 In our tutorial project, you should provide a password to provide you have permission to manage this account.
 
