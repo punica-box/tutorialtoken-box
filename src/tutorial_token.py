@@ -9,6 +9,7 @@ from ontology.exception.exception import SDKException
 from ontology.ont_sdk import OntologySdk
 from ontology.utils import util
 
+
 static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 template_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'html')
 app = Flask('DXToken', static_folder=static_folder, template_folder=template_folder)
@@ -319,4 +320,4 @@ def allowance():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5002)
