@@ -51,9 +51,9 @@ In the past, when we wanted to begin developing on Ontology Blockchain, the firs
 
 Now, we have a brief answer, “Start from Punica Box.
 
-Punica Box is an example Ontology application and/or boilerplate that puts complimentary tools and libraries into a single, easily-downloadable package. Every Punica Box comes with libraries and tools already preinstalled, code that uses those libraries and tools, external scripts (if necessary), as well as helpful README's and documentation. All Punica Boxes are directly integrated into the OBox command line, and you need only type `punica unbox <box name>` to download and prepare your box of choice.
+Punica Box is an example Ontology application and/or boilerplate that puts complimentary tools and libraries into a single, easily-downloadable package. Every Punica Box comes with libraries and tools already preinstalled, code that uses those libraries and tools, external scripts (if necessary), as well as helpful README's and documentation. All Punica Boxes are directly integrated into the Punica command line, and you need only type `punica unbox <box name>` to download and prepare your box of choice.
 
-Before we begin a wonderful journey, ensure you've installed the latest version of OBox before opening your first box.
+Before we begin a wonderful journey, ensure you've installed the latest version of Punica before opening your first box.
 
 ### 4.3. Unboxing the dApp
 
@@ -91,7 +91,7 @@ pip install -r requirements.txt
 
 With our front-end taken care of, we can focus on the `oep4_token` contract.
 
-In the `contracts/` directory of your `OBox`, create the file `oep4_token.py` and add the following contents:
+In the `contracts/` directory of your `Punica`, create the file `oep4_token.py` and add the following contents:
 
 ```python
 from boa.interop.System.Storage import GetContext, Get, Put, Delete
