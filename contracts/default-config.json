@@ -58,7 +58,7 @@
               "args": [
                   {
                       "name":"account",
-                      "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   }
               ],
               "signature": {},
@@ -69,11 +69,11 @@
               "args": [
                   {
                       "name":"from_acct",
-                      "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   },
                   {
                       "name":"to_acct",
-                      "value": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
                   },
                   {
                       "name":"amount",
@@ -94,16 +94,16 @@
                   {
                      "name":"state",
                       "value": [
-                          "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                          "ByteArray:ARLvwmvJ38stT9MKD78YtpDak3MENZkoxF",
+                          "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                          "Address:ARLvwmvJ38stT9MKD78YtpDak3MENZkoxF",
                           1
                       ]
                   },
                   {
                       "name":"state",
                       "value": [
-                          "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                          "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                          "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                          "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
                           1
                       ]
                   }
@@ -122,11 +122,11 @@
               "args": [
                   {
                       "name":"owner",
-                      "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   },
                   {
                       "name":"spender",
-                      "value": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
                   }
               ],
               "signature": {
@@ -142,15 +142,15 @@
               "args": [
                   {
                       "name":"sender",
-                      "value": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
                   },
                   {
                       "name":"from_acct",
-                      "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   },
                   {
                       "name":"to_acct",
-                      "value": "ByteArray:Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1"
+                      "value": "Address:Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1"
                   },
                   {
                       "name":"amount",
@@ -170,11 +170,11 @@
               "args": [
                   {
                       "name":"owner",
-                      "value": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
                   },
                   {
                       "name":"spender",
-                      "value": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   },
                   {
                       "name":"amount",
