@@ -1,34 +1,6 @@
 # tutorialtoken-box
 
-<!-- TOC -->
-
-- [1. Introduction](#1-introduction)
-- [2. Architecture](#2-architecture)
-- [3. Setting up the development environment](#3-setting-up-the-development-environment)
-- [4. Getting started](#4-getting-started)
-    - [4.1. what's the Punica Suite](#41-whats-the-punica-suite)
-    - [4.2. what's the Punica Box](#42-whats-the-punica-box)
-    - [4.3. Unboxing the dApp](#43-unboxing-the-dapp)
-    - [4.4. Creating Smart Contract](#44-creating-smart-contract)
-    - [4.5. Implement the Interface of OEP4 Contract](#45-implement-the-interface-of-oep4-contract)
-        - [4.5.1. Support Getting the Parameters of Token](#451-support-getting-the-parameters-of-token)
-        - [4.5.2. Initialize Token Parameter](#452-initialize-token-parameter)
-    - [4.6. Support Check Balance](#46-support-check-balance)
-    - [4.7. Support Transfer](#47-support-transfer)
-        - [4.7.1. Transfer](#471-transfer)
-        - [4.7.2. TransferMulti](#472-transfermulti)
-        - [4.7.3. TransferFrom](#473-transferfrom)
-- [5. Run your dApp](#5-run-your-dapp)
-- [6. Use your dApp](#6-use-your-dapp)
-    - [6.1. Information Query](#61-information-query)
-    - [6.2. Token Transfer](#62-token-transfer)
-    - [6.3. Token TransferMulti](#63-token-transfermulti)
-    - [6.4. Token Approve](#64-token-approve)
-    - [6.5. Token Allowance](#65-token-allowance)
-    - [6.6. Token TransferFrom](#66-token-transferfrom)
-    - [6.7. dApp Settings](#67-dapp-settings)
-
-<!-- /TOC -->
+<!-- TOC -->autoauto- [1. Introduction](#1-introduction)auto- [2. Architecture](#2-architecture)auto- [3. Setting up the development environment](#3-setting-up-the-development-environment)auto- [4. Getting started](#4-getting-started)auto    - [4.1. what's the Punica Suite](#41-whats-the-punica-suite)auto    - [4.2. what's the Punica Box](#42-whats-the-punica-box)auto    - [4.3. Unboxing the dApp](#43-unboxing-the-dapp)auto    - [4.4. Creating Smart Contract](#44-creating-smart-contract)auto    - [4.5. Implement the Interface of OEP4 Contract](#45-implement-the-interface-of-oep4-contract)auto        - [4.5.1. Support Getting the Parameters of Token](#451-support-getting-the-parameters-of-token)auto        - [4.5.2. Initialize Token Parameter](#452-initialize-token-parameter)auto    - [4.6. Support Check Balance](#46-support-check-balance)auto    - [4.7. Support Transfer](#47-support-transfer)auto        - [4.7.1. Transfer](#471-transfer)auto        - [4.7.2. TransferMulti](#472-transfermulti)auto        - [4.7.3. TransferFrom](#473-transferfrom)auto- [5. Run your dApp](#5-run-your-dapp)auto- [6. Use your dApp](#6-use-your-dapp)auto    - [6.1. Information Query](#61-information-query)auto    - [6.2. Token Transfer](#62-token-transfer)auto    - [6.3. Token TransferMulti](#63-token-transfermulti)auto    - [6.4. Token Approve](#64-token-approve)auto    - [6.5. Token Allowance](#65-token-allowance)auto    - [6.6. Token TransferFrom](#66-token-transferfrom)auto    - [6.7. dApp Settings](#67-dapp-settings)autoauto<!-- /TOC -->
 
 ## 1. Introduction
 
@@ -71,7 +43,7 @@ Punica is a Ontology dApp Development Framework, which has (almost) everything y
 
 Now, we have Punica CLI, Punica Box and Solo Chain in our Punica Suite. More powerful dApp development tools is on the road.
 
-![punicaSuite](img/punicaSuite.png)
+![ecosystem](img/ecosystem.png)
 
 ### 4.2. what's the Punica Box
 
@@ -79,9 +51,9 @@ In the past, when we wanted to begin developing on Ontology Blockchain, the firs
 
 Now, we have a brief answer, “Start from Punica Box.
 
-Punica Box is an example Ontology application and/or boilerplate that puts complimentary tools and libraries into a single, easily-downloadable package. Every Punica Box comes with libraries and tools already preinstalled, code that uses those libraries and tools, external scripts (if necessary), as well as helpful README's and documentation. All Punica Boxes are directly integrated into the OBox command line, and you need only type `punica unbox <box name>` to download and prepare your box of choice.
+Punica Box is an example Ontology application and/or boilerplate that puts complimentary tools and libraries into a single, easily-downloadable package. Every Punica Box comes with libraries and tools already preinstalled, code that uses those libraries and tools, external scripts (if necessary), as well as helpful README's and documentation. All Punica Boxes are directly integrated into the Punica command line, and you need only type `punica unbox <box name>` to download and prepare your box of choice.
 
-Before we begin a wonderful journey, ensure you've installed the latest version of OBox before opening your first box.
+Before we begin a wonderful journey, ensure you've installed the latest version of Punica before opening your first box.
 
 ### 4.3. Unboxing the dApp
 
@@ -119,7 +91,7 @@ pip install -r requirements.txt
 
 With our front-end taken care of, we can focus on the `oep4_token` contract.
 
-In the `contracts/` directory of your `OBox`, create the file `oep4_token.py` and add the following contents:
+In the `contracts/` directory of your `Punica`, create the file `oep4_token.py` and add the following contents:
 
 ```python
 from boa.interop.System.Storage import GetContext, Get, Put, Delete

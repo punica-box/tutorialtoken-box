@@ -1,8 +1,9 @@
-from boa.interop.Ontology.Runtime import AddressToBase58, Base58ToAddress
-from boa.interop.System.Storage import GetContext, Get, Put, Delete
-from boa.interop.System.Runtime import Notify, CheckWitness
-from boa.interop.System.Action import RegisterAction
-from boa.builtins import concat, ToScriptHash
+OntCversion = '2.0.0'
+from ontology.interop.System.Storage import GetContext, Get, Put, Delete
+from ontology.interop.System.Runtime import Notify, CheckWitness
+from ontology.interop.System.Action import RegisterAction
+from ontology.builtins import concat
+from ontology.interop.Ontology.Runtime import Base58ToAddress
 
 TransferEvent = RegisterAction("transfer", "from", "to", "amount")
 ApprovalEvent = RegisterAction("approval", "owner", "spender", "amount")
@@ -11,79 +12,13 @@ ctx = GetContext()
 
 NAME = 'DXToken'
 SYMBOL = 'DX'
-DECIMALS = 10
+DECIMALS = 8
+FACTOR = 100000000
+OWNER = Base58ToAddress("AUQ2cqRs2daQBqTFs6Zun8eYXRe4a9JZUC")
 TOTAL_AMOUNT = 1000000000
-OWNER = ToScriptHash("ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6")
-
-BALANCE_PREFIX = b'\x01'
+BALANCE_PREFIX = bytearray(b'\x01')
 APPROVE_PREFIX = b'\x02'
-
 SUPPLY_KEY = 'TotalSupply'
-
-def approve(owner,spender,amount):
-    if len(spender) != 20 or len(owner) != 20:
-        raise Exception("address length error")
-    if CheckWitness(owner) == False:
-        return False
-    if amount > balanceOf(owner):
-        return False
-    key = concat(concat(APPROVE_PREFIX,owner),spender)
-    Put(ctx, key, amount)
-    ApprovalEvent(owner, spender, amount)
-    return True
-
-def transfer(from_acct,to_acct,amount):
-    if len(to_acct) != 20 or len(from_acct) != 20:
-        raise Exception("address length error")
-    if CheckWitness(from_acct) == False:
-        return False
-
-    fromKey = concat(BALANCE_PREFIX,from_acct)
-    fromBalance = Get(ctx,fromKey)
-    if amount > fromBalance:
-        return False
-    if amount == fromBalance:
-        Delete(ctx,fromKey)
-    else:
-        Put(ctx,fromKey,fromBalance - amount)
-
-    toKey = concat(BALANCE_PREFIX,to_acct)
-    toBalance = Get(ctx,toKey)
-    Put(ctx,toKey,toBalance + amount)
-    TransferEvent(from_acct, to_acct, amount)
-    return True
-
-def name():
-    return NAME
-
-def symbol():
-    return SYMBOL
-
-def decimals():
-    return DECIMALS
-
-def totalSupply():
-    return Get(ctx, SUPPLY_KEY)
-
-def balanceOf(account):
-    if len(account) != 20:
-        raise Exception("address length error")
-    return Get(ctx,concat(BALANCE_PREFIX,account))
-
-def init():
-    """
-    initialize the contract, put some important info into the storage in the blockchain
-    """
-    if Get(ctx,SUPPLY_KEY):
-        Notify("Already initialized!")
-        return False
-    else:
-        FACTOR = Pow(10, DECIMALS)
-        total = TOTAL_AMOUNT * FACTOR
-        Put(ctx,SUPPLY_KEY,total)
-        Put(ctx,concat(BALANCE_PREFIX,OWNER),total)
-        TransferEvent("", OWNER, total)
-        return True
 
 
 def Main(operation, args):
@@ -92,11 +27,12 @@ def Main(operation, args):
     :param args:
     :return:
     """
-    # 'init' has to be invokded first after deploying the contract to store the necessary and important info into the blockchain
+    # 'init' has to be invokded first after deploying the contract
+    # to store the necessary and important info in the blockchain.
     if operation == 'init':
         return init()
     if operation == 'name':
-        return NAME
+        return name()
     if operation == 'symbol':
         return symbol()
     if operation == 'decimals':
@@ -139,18 +75,21 @@ def Main(operation, args):
         owner = args[0]
         spender = args[1]
         return allowance(owner,spender)
-
+    return False
 
 def init():
     """
     initialize the contract, put some important info into the storage in the blockchain
     :return:
     """
+
+    if len(OWNER) != 20:
+        Notify(["Owner illegal!"])
+        return False
     if Get(ctx,SUPPLY_KEY):
         Notify("Already initialized!")
         return False
     else:
-        FACTOR = Pow(10, DECIMALS)
         total = TOTAL_AMOUNT * FACTOR
         Put(ctx,SUPPLY_KEY,total)
         Put(ctx,concat(BALANCE_PREFIX,OWNER),total)
@@ -206,7 +145,7 @@ def transfer(from_acct,to_acct,amount):
     """
     if len(to_acct) != 20 or len(from_acct) != 20:
         raise Exception("address length error")
-    if CheckWitness(from_acct) == False:
+    if CheckWitness(from_acct) == False or amount < 0:
         return False
 
     fromKey = concat(BALANCE_PREFIX,from_acct)
@@ -222,6 +161,7 @@ def transfer(from_acct,to_acct,amount):
     toBalance = Get(ctx,toKey)
     Put(ctx,toKey,toBalance + amount)
     TransferEvent(from_acct, to_acct, amount)
+
     return True
 
 
@@ -253,11 +193,13 @@ def approve(owner,spender,amount):
         raise Exception("address length error")
     if CheckWitness(owner) == False:
         return False
-    if amount > balanceOf(owner):
+    if amount > balanceOf(owner) or amount < 0:
         return False
+
     key = concat(concat(APPROVE_PREFIX,owner),spender)
     Put(ctx, key, amount)
     ApprovalEvent(owner, spender, amount)
+
     return True
 
 
@@ -278,22 +220,23 @@ def transferFrom(spender,from_acct,to_acct,amount):
 
     fromKey = concat(BALANCE_PREFIX, from_acct)
     fromBalance = Get(ctx, fromKey)
-    if amount > fromBalance:
+    if amount > fromBalance or amount < 0:
         return False
 
     approveKey = concat(concat(APPROVE_PREFIX,from_acct),spender)
     approvedAmount = Get(ctx,approveKey)
     toKey = concat(BALANCE_PREFIX,to_acct)
-    toBalance = Get(ctx, toKey)
+
     if amount > approvedAmount:
         return False
     elif amount == approvedAmount:
         Delete(ctx,approveKey)
-        Delete(ctx, fromBalance - amount)
+        Put(ctx, fromKey, fromBalance - amount)
     else:
         Put(ctx,approveKey,approvedAmount - amount)
         Put(ctx, fromKey, fromBalance - amount)
 
+    toBalance = Get(ctx, toKey)
     Put(ctx, toKey, toBalance + amount)
     TransferEvent(from_acct, to_acct, amount)
 
@@ -309,54 +252,3 @@ def allowance(owner,spender):
     """
     key = concat(concat(APPROVE_PREFIX,owner),spender)
     return Get(ctx,key)
-
-def Revert():
-    """
-    Revert the transaction. The opcodes of this function is `09f7f6f5f4f3f2f1f000f0`,
-    but it will be changed to `ffffffffffffffffffffff` since opcode THROW doesn't
-    work, so, revert by calling unused opcode.
-    """
-    raise Exception(0xF1F1F2F2F3F3F4F4)
-
-def Require(condition):
-	"""
-	If condition is not satisfied, return false
-	:param condition: required condition
-	:return: True or false
-	"""
-	if not condition:
-		Revert()
-	return True
-
-def Mul(a, b):
-	"""
-	Multiplies two numbers, throws on overflow.
-    :param a: operand a
-    :param b: operand b
-    :return: a - b if a - b > 0 or revert the transaction.
-	"""
-	if a == 0:
-		return 0
-	c = a * b
-	Require(c / a == b)
-	return c
-
-def Pow(a, b):
-    """
-    a to the power of b
-    :param a the base
-    :param b the power value
-    :return a^b
-    """
-    c = 0
-    if a == 0:
-        c = 0
-    elif b == 0:
-        c = 1
-    else:
-        i = 0
-        c = 1
-        while i < b:
-            c = Mul(c, a)
-            i = i + 1
-    return c
