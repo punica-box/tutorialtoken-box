@@ -12,136 +12,183 @@
     "desc": "A tutorial token based on Ontology Blockchain",
     "needStorage": true,
     "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-    "gasPrice": 500,
+    "gasPrice": 0,
     "gasLimit": 21000000
   },
-  "invokeConfig":{
+  "invokeConfig": {
       "abi": "oep4_token_abi.json",
       "defaultPayer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
       "defaultSigner": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+      "sleepTime":10,
       "gasPrice": 0,
       "gasLimit": 21000000,
       "functions": [
           {
-              "name":"init",
-              "params": {},
-              "signers": {},
+              "operation": "init",
+              "args": [],
+              "signature": {},
+              "preExec": false
+          },
+          {
+              "operation": "name",
+              "args": [],
+              "signature": {},
               "preExec": true
           },
           {
-              "name":"name",
-              "params": {},
-              "signers": {},
+              "operation": "symbol",
+              "args": [],
+              "signature": {},
               "preExec": true
           },
           {
-              "name":"symbol",
-              "params": {},
-              "signers": {},
+              "operation": "decimals",
+              "args": [],
+              "signature": {},
               "preExec": true
           },
           {
-              "name":"decimals",
-              "params": {},
-              "signers": {},
+              "operation": "totalSupply",
+              "args": [],
+              "signature": {},
               "preExec": true
           },
           {
-              "name":"totalSupply",
-              "params": {},
-              "signers": {},
+              "operation": "balanceOf",
+              "args": [
+                  {
+                      "name":"account",
+                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                  }
+              ],
+              "signature": {},
               "preExec": true
           },
           {
-              "name":"balanceOf",
-              "params": {
-                  "account": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-              },
-              "signers": {},
-              "preExec": true
-          },
-          {
-              "name":"transfer",
-              "params": {
-                  "from_acct": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                  "to_acct": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
-                  "amount": 1
-              },
-              "signers": {
+              "operation": "transfer",
+              "args": [
+                  {
+                      "name":"from_acct",
+                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                  },
+                  {
+                      "name":"to_acct",
+                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                  },
+                  {
+                      "name":"amount",
+                      "value": 1
+                  }
+              ],
+              "signature": {
                   "m": 1,
-                  "signer": [
+                  "signers": [
                       "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   ]
               },
               "preExec": false
           },
           {
-              "name":"transferMulti",
-              "params": {
-                  "args": [
-                      {
-                          "from": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                          "to": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
-                          "amount": 1
-                      },
-                      {
-                          "from": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
-                          "to": "ByteArray:Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1",
-                          "amount": 2
-                      }
-                  ]
-              },
-              "signers": {
+              "operation": "transferMulti",
+              "args": [
+                  {
+                     "name":"state",
+                      "value": [
+                          "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                          "Address:ARLvwmvJ38stT9MKD78YtpDak3MENZkoxF",
+                          1
+                      ]
+                  },
+                  {
+                      "name":"state",
+                      "value": [
+                          "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                          "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                          1
+                      ]
+                  }
+              ],
+              "signature": {
                   "m": 1,
-                  "signer": [
-                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                      "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                  "signers": [
+                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   ]
               },
               "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
               "preExec": false
           },
           {
-              "name":"allowance",
-              "params": {
-                  "owner": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                  "spender": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
-              },
-              "signers": {
+              "operation": "allowance",
+              "args": [
+                  {
+                      "name":"owner",
+                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                  },
+                  {
+                      "name":"spender",
+                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                  }
+              ],
+              "signature": {
                   "m": 1,
-                  "signer": [
+                  "signers": [
                       "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
                   ]
               },
               "preExec": false
           },
           {
-              "name":"transferFrom",
-              "params": {
-                  "sender": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
-                  "from_acct": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                  "to_acct": "ByteArray:Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1",
-                  "amount": 1
-              },
-              "signers": {
+              "operation": "transferFrom",
+              "args": [
+                  {
+                      "name":"sender",
+                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                  },
+                  {
+                      "name":"from_acct",
+                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                  },
+                  {
+                      "name":"to_acct",
+                      "value": "Address:Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1"
+                  },
+                  {
+                      "name":"amount",
+                      "value": 1
+                  }
+              ],
+              "signature": {
                   "m": 1,
-                  "signer": ["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"]
+                  "signers": [
+                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                  ]
               },
               "preExec": false
           },
           {
-              "name":"approve",
-              "params": {
-                  "owner": "ByteArray:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
-                  "spender": "ByteArray:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                  "amount": 1
+              "operation": "approve",
+              "args": [
+                  {
+                      "name":"owner",
+                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                  },
+                  {
+                      "name":"spender",
+                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                  },
+                  {
+                      "name":"amount",
+                      "value": 1
+                  }
+              ],
+              "signature": {
+                  "m": 1,
+                  "signers": [
+                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                  ]
               },
-              "signers": {
-                "m": 1,
-                  "signer": ["ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"]
-              },
-              "preExec": true
+              "preExec": false
           }
       ]
-  }
+    }
 }
