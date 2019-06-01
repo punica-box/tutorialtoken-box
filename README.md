@@ -87,10 +87,10 @@ Install Punica.
 pip install punica
 ```
 
-Download the interplanetary-album box.
+Download the tutorial token box.
 
 ```shell
-punica unbox interplanetary-album
+punica unbox tutorial-token
 ```
 
 Create virtual environments(optional).
