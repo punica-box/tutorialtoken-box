@@ -1,14 +1,13 @@
 import os
 
-from flask import Flask, request, send_from_directory, render_template, url_for
-from flask_jsglue import JSGlue
 from flask import json
+from flask_jsglue import JSGlue
+from flask import Flask, request, send_from_directory, render_template, url_for
 
-from ontology.wallet.wallet_manager import WalletManager
+from ontology.utils import utils
+from ontology.sdk import Ontology
 from ontology.exception.exception import SDKException
-from ontology.ont_sdk import OntologySdk
-from ontology.utils import util
-
+from ontology.wallet.wallet_manager import WalletManager
 
 static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 template_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'html')
@@ -17,10 +16,10 @@ app.config.from_object('default_settings')
 jsglue = JSGlue()
 jsglue.init_app(app)
 
-sdk = OntologySdk()
-sdk.set_rpc(app.config['DEFAULT_REMOTE_RPC_ADDRESS'])
-oep4 = sdk.neo_vm().oep4()
-oep4.set_contract_address(app.config['DEFAULT_CONTRACT_ADDRESS'])
+sdk = Ontology()
+sdk.rpc.set_address(app.config['DEFAULT_REMOTE_RPC_ADDRESS'])
+oep4 = sdk.neo_vm.oep4()
+oep4.hex_contract_address = app.config['DEFAULT_CONTRACT_ADDRESS']
 gas_price = app.config['GAS_PRICE']
 gas_limit = app.config['GAS_LIMIT']
 wallet_manager = WalletManager()
@@ -45,7 +44,7 @@ def get_accounts():
     account_list = wallet_manager.get_wallet().get_accounts()
     address_list = list()
     for acct in account_list:
-        acct_item = {'b58_address': acct.address, 'label': acct.label}
+        acct_item = {'b58_address': acct.b58_address, 'label': acct.label}
         address_list.append(acct_item)
     return json.jsonify({'result': address_list}), 200
 
@@ -54,7 +53,7 @@ def get_accounts():
 def create_account():
     password = request.json.get('password')
     label = request.json.get('label')
-    hex_private_key = util.get_random_bytes(32).hex()
+    hex_private_key = utils.get_random_bytes(32).hex()
     wallet_manager.create_account_from_private_key(label, password, hex_private_key)
     wallet_manager.save()
     return json.jsonify({'hex_private_key': hex_private_key})
@@ -111,8 +110,7 @@ def set_contract_address():
 @app.route('/get_contract_address', methods=['GET'])
 def get_contract_address():
     global oep4
-    contract_address = oep4.get_contract_address()
-    return json.jsonify({'result': contract_address}), 200
+    return json.jsonify({'result': oep4.hex_contract_address}), 200
 
 
 @app.route('/change_net', methods=['POST'])
@@ -121,32 +119,32 @@ def change_net():
     if network_selected == 'MainNet':
         remote_rpc_address = 'http://dappnode1.ont.io:20336'
         with app.app_context() as context:
-            sdk.set_rpc(remote_rpc_address)
-            sdk_rpc_address = sdk.get_rpc().addr
+            sdk.rpc.set_address(remote_rpc_address)
+            sdk_rpc_address = sdk.rpc.get_address()
             if sdk_rpc_address != remote_rpc_address:
                 result = ''.join(['remote rpc address set failed. the rpc address now used is ', sdk_rpc_address])
                 return json.jsonify({'result': result}), 409
     elif network_selected == 'TestNet':
         remote_rpc_address = 'http://polaris3.ont.io:20336'
         with app.app_context() as context:
-            sdk.set_rpc(remote_rpc_address)
-            sdk_rpc_address = sdk.get_rpc().addr
+            sdk.rpc.set_address(remote_rpc_address)
+            sdk_rpc_address = sdk.rpc.get_address()
             if sdk_rpc_address != remote_rpc_address:
                 result = ''.join(['remote rpc address set failed. the rpc address now used is ', sdk_rpc_address])
                 return json.jsonify({'result': result}), 409
     elif network_selected == 'Localhost':
         remote_rpc_address = 'http://localhost:20336'
         with app.app_context() as context:
-            sdk.set_rpc(remote_rpc_address)
-            old_remote_rpc_address = sdk.get_rpc()
-            sdk_rpc_address = sdk.get_rpc().addr
+            sdk.rpc.set_address(remote_rpc_address)
+            old_remote_rpc_address = sdk.rpc.get_address()
+            sdk_rpc_address = sdk.rpc.get_address()
             if sdk_rpc_address != remote_rpc_address:
                 result = ''.join(['remote rpc address set failed. the rpc address now used is ', sdk_rpc_address])
                 return json.jsonify({'result': result}), 409
             try:
                 sdk.rpc.get_version()
             except SDKException as e:
-                sdk.set_rpc(old_remote_rpc_address)
+                sdk.rpc.set_address(old_remote_rpc_address)
                 error_msg = 'Other Error, ConnectionError'
                 if error_msg in e.args[1]:
                     return json.jsonify({'result': 'Connection to localhost node failed.'}), 400
@@ -164,7 +162,7 @@ def get_smart_contract_event():
     tx_hash = request.json.get('tx_hash')
     event_info_select = request.json.get('event_info_select')
     try:
-        event = sdk.rpc.get_smart_contract_event_by_tx_hash(tx_hash)
+        event = sdk.rpc.get_contract_event_by_tx_hash(tx_hash)
     except SDKException as e:
         return json.jsonify({'result': e.args[1]}), 500
     try:
@@ -178,8 +176,7 @@ def get_smart_contract_event():
 def get_name():
     try:
         global oep4
-        name = oep4.get_name()
-        return json.jsonify({'result': name}), 200
+        return json.jsonify({'result': oep4.name()}), 200
     except RuntimeError:
         return json.jsonify({'result': 'get name failed'}), 500
     except SDKException as e:
@@ -190,8 +187,7 @@ def get_name():
 def get_symbol():
     try:
         global oep4
-        symbol = oep4.get_symbol()
-        return json.jsonify({'result': symbol}), 200
+        return json.jsonify({'result': oep4.symbol()}), 200
     except RuntimeError:
         return json.jsonify({'result': 'get symbol failed'}), 500
     except SDKException as e:
@@ -202,8 +198,7 @@ def get_symbol():
 def get_decimal():
     try:
         global oep4
-        decimal = oep4.get_decimal()
-        return json.jsonify({'result': decimal}), 200
+        return json.jsonify({'result': oep4.decimal()}), 200
     except RuntimeError:
         return json.jsonify({'result': 'get decimal failed'}), 500
     except SDKException as e:
@@ -220,11 +215,11 @@ def query_balance():
             balance = oep4.balance_of(b58_address)
             return json.jsonify({'result': str(balance)}), 200
         elif asset_select == 'ONT':
-            balance = sdk.rpc.get_balance(b58_address)
-            return json.jsonify({'result': str(balance['ont'])}), 200
+            balance = sdk.native_vm.ont().balance_of(b58_address)
+            return json.jsonify({'result': str(balance)}), 200
         elif asset_select == 'ONG':
-            balance = sdk.rpc.get_balance(b58_address)
-            return json.jsonify({'result': str(balance['ong'])}), 200
+            balance = sdk.native_vm.ong().balance_of(b58_address)
+            return json.jsonify({'result': str(balance)}), 200
         else:
             return json.jsonify({'result': 'query balance failed'}), 500
     except SDKException as e:
@@ -237,13 +232,13 @@ def transfer():
     password = request.json.get('password')
     amount = int(request.json.get('amount'))
     try:
-        b58_from_address = wallet_manager.get_default_account().get_address()
+        b58_from_address = wallet_manager.get_default_account_data().b58_address
         try:
-            from_acct = wallet_manager.get_account(b58_from_address, password)
+            from_acct = wallet_manager.get_account_by_b58_address(b58_from_address, password)
         except SDKException as e:
             return json.jsonify({'result': e.args[1]}), 500
         global oep4
-        tx_hash = oep4.transfer(from_acct, b58_to_address, amount, from_acct, gas_limit, gas_price)
+        tx_hash = oep4.transfer(from_acct, b58_to_address, amount, from_acct, gas_price, gas_limit)
     except IndexError:
         return json.jsonify({'result': 'Please import an account'}), 400
     except SDKException as e:
@@ -259,13 +254,13 @@ def transfer_multi():
     signers = list()
     for (item, password) in zip(args, password_array):
         try:
-            account = wallet_manager.get_account(item[0], password)
+            account = wallet_manager.get_account_by_b58_address(item[0], password)
         except SDKException as e:
             return json.jsonify({'result': e.args[1]}), 500
         signers.append(account)
     global oep4
     try:
-        tx_hash = oep4.transfer_multi(args, signers[0], signers, gas_limit, gas_price)
+        tx_hash = oep4.transfer_multi(args, signers[0], signers, gas_price, gas_limit)
     except SDKException as e:
         return json.jsonify({'result': e.args[1]}), 500
     return json.jsonify({'result': tx_hash}), 200
@@ -277,10 +272,10 @@ def approve():
     b58_spender_address = request.json.get('b58_spender_address')
     amount = request.json.get('amount')
     try:
-        b58_from_address = wallet_manager.get_default_account().get_address()
-        default_acct = wallet_manager.get_account(b58_from_address, password)
+        b58_from_address = wallet_manager.get_default_account_data().b58_address
+        default_acct = wallet_manager.get_account_by_b58_address(b58_from_address, password)
         global oep4
-        tx_hash = oep4.approve(default_acct, b58_spender_address, amount, default_acct, gas_limit, gas_price)
+        tx_hash = oep4.approve(default_acct, b58_spender_address, amount, default_acct, gas_price, gas_limit)
     except IndexError:
         return json.jsonify({'result': 'Please import an account'}), 400
     except SDKException as e:
@@ -296,12 +291,12 @@ def transfer_from():
     b58_to_address = request.json.get('b58_to_address')
     amount = int(request.json.get('amount'))
     try:
-        spender = wallet_manager.get_account(b58_spender_address, password)
+        spender = wallet_manager.get_account_by_b58_address(b58_spender_address, password)
     except SDKException as e:
         return json.jsonify({'result': e.args[1]}), 500
     global oep4
     try:
-        tx_hash = oep4.transfer_from(spender, b58_from_address, b58_to_address, amount, spender, gas_limit, gas_price)
+        tx_hash = oep4.transfer_from(spender, b58_from_address, b58_to_address, amount, spender, gas_price, gas_limit)
     except SDKException as e:
         return json.jsonify({'result': e.args[1]}), 500
     return json.jsonify({'result': tx_hash}), 200
