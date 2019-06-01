@@ -1,4 +1,4 @@
-# tutorialtoken-box
+# Tutorial Token Box
 
 A box containing a tutorial token dApp based on Ontology Blockchain.
 
