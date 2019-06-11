@@ -12,7 +12,7 @@
     "desc": "A tutorial token based on Ontology Blockchain",
     "needStorage": true,
     "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-    "gasPrice": 0,
+    "gasPrice": 500,
     "gasLimit": 21000000
   },
   "invokeConfig": {
