@@ -1,194 +1,104 @@
 {
-  "defaultWallet":"wallet.json",
-  "password":{
-      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6": "password",
-      "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve": "password"
-  },
-  "deployConfig": {
-    "name": "tutorialToken",
-    "version": "1.0.0",
-    "author": "Nash",
-    "email": "wdx7266@vip.qq.com",
-    "desc": "A tutorial token based on Ontology Blockchain",
-    "needStorage": true,
-    "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-    "gasPrice": 0,
-    "gasLimit": 21000000
-  },
-  "invokeConfig": {
-      "abi": "oep4_token_abi.json",
-      "defaultPayer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-      "defaultSigner": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-      "sleepTime":10,
-      "gasPrice": 0,
-      "gasLimit": 21000000,
-      "functions": [
-          {
-              "operation": "init",
-              "args": [],
-              "signature": {},
-              "preExec": false
-          },
-          {
-              "operation": "name",
-              "args": [],
-              "signature": {},
-              "preExec": true
-          },
-          {
-              "operation": "symbol",
-              "args": [],
-              "signature": {},
-              "preExec": true
-          },
-          {
-              "operation": "decimals",
-              "args": [],
-              "signature": {},
-              "preExec": true
-          },
-          {
-              "operation": "totalSupply",
-              "args": [],
-              "signature": {},
-              "preExec": true
-          },
-          {
-              "operation": "balanceOf",
-              "args": [
-                  {
-                      "name":"account",
-                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-                  }
-              ],
-              "signature": {},
-              "preExec": true
-          },
-          {
-              "operation": "transfer",
-              "args": [
-                  {
-                      "name":"from_acct",
-                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-                  },
-                  {
-                      "name":"to_acct",
-                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
-                  },
-                  {
-                      "name":"amount",
-                      "value": 1
-                  }
-              ],
-              "signature": {
-                  "m": 1,
-                  "signers": [
-                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-                  ]
-              },
-              "preExec": false
-          },
-          {
-              "operation": "transferMulti",
-              "args": [
-                  {
-                     "name":"state",
-                      "value": [
-                          "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                          "Address:ARLvwmvJ38stT9MKD78YtpDak3MENZkoxF",
-                          1
-                      ]
-                  },
-                  {
-                      "name":"state",
-                      "value": [
-                          "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                          "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
-                          1
-                      ]
-                  }
-              ],
-              "signature": {
-                  "m": 1,
-                  "signers": [
-                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-                  ]
-              },
-              "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-              "preExec": false
-          },
-          {
-              "operation": "allowance",
-              "args": [
-                  {
-                      "name":"owner",
-                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-                  },
-                  {
-                      "name":"spender",
-                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
-                  }
-              ],
-              "signature": {
-                  "m": 1,
-                  "signers": [
-                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-                  ]
-              },
-              "preExec": false
-          },
-          {
-              "operation": "transferFrom",
-              "args": [
-                  {
-                      "name":"sender",
-                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
-                  },
-                  {
-                      "name":"from_acct",
-                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-                  },
-                  {
-                      "name":"to_acct",
-                      "value": "Address:Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1"
-                  },
-                  {
-                      "name":"amount",
-                      "value": 1
-                  }
-              ],
-              "signature": {
-                  "m": 1,
-                  "signers": [
-                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-                  ]
-              },
-              "preExec": false
-          },
-          {
-              "operation": "approve",
-              "args": [
-                  {
-                      "name":"owner",
-                      "value": "Address:AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
-                  },
-                  {
-                      "name":"spender",
-                      "value": "Address:ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-                  },
-                  {
-                      "name":"amount",
-                      "value": 1
-                  }
-              ],
-              "signature": {
-                  "m": 1,
-                  "signers": [
-                      "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
-                  ]
-              },
-              "preExec": false
-          }
-      ]
+    "defaultWallet": "wallet.json",
+    "password": {
+        "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6": "password",
+        "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve": "password"
+    },
+    "deploy": {
+        "name": "tutorialToken",
+        "version": "1.0.0",
+        "author": "Nash",
+        "email": "wdx7266@vip.qq.com",
+        "desc": "A tutorial token based on Ontology Blockchain",
+        "needStorage": true,
+        "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+        "gasPrice": 500,
+        "gasLimit": 21000000
+    },
+    "invokeConfig": {
+        "address": "f6cbe3ed53e054cf4b29fc8540d6469ac5b4fe9c",
+        "defaultPayer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+        "defaultSigner": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+        "sleep": 6,
+        "gasPrice": 500,
+        "gasLimit": 21000000,
+        "functions": [
+            {
+                "init": [],
+                "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+            },
+            {
+                "name": [],
+                "preExec": true
+            },
+            {
+                "symbol": [],
+                "preExec": true
+            },
+            {
+                "decimals": [],
+                "preExec": true
+            },
+            {
+                "totalSupply": [],
+                "preExec": true
+            },
+            {
+                "balanceOf": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                "preExec": true
+            },
+            {
+                "transfer": [
+                    "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                    "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                    1
+                ],
+                "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+            },
+            {
+                "operation": "transferMulti",
+                "args": [
+                    [
+                        "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                        "ARLvwmvJ38stT9MKD78YtpDak3MENZkoxF",
+                        1
+                    ],
+                    [
+                        "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                        "ARLvwmvJ38stT9MKD78YtpDak3MENZkoxF",
+                        1
+                    ]
+                ],
+                "payer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                "signers": [
+                    "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                    "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                ]
+            },
+            {
+                "allowance": [
+                    "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                    "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
+                ],
+                "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+            },
+            {
+                "transferFrom": [
+                    "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                    "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                    "Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1",
+                    1
+                ],
+                "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+            },
+            {
+                "approve": [
+                    "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
+                    "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
+                    1
+                ],
+                "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+            }
+        ]
     }
 }
