@@ -15,7 +15,7 @@
         "gasPrice": 500,
         "gasLimit": 21000000
     },
-    "invokeConfig": {
+    "invoke": {
         "address": "f6cbe3ed53e054cf4b29fc8540d6469ac5b4fe9c",
         "defaultPayer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
         "defaultSigner": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
