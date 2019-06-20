@@ -56,8 +56,7 @@
                 "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
             },
             {
-                "operation": "transferMulti",
-                "args": [
+                "transferMulti": [
                     [
                         "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
                         "ARLvwmvJ38stT9MKD78YtpDak3MENZkoxF",
