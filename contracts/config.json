@@ -25,7 +25,9 @@
         "functions": [
             {
                 "init": [],
-                "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                "signers": [
+                    "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                ]
             },
             {
                 "name": [],
@@ -53,7 +55,9 @@
                     "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve",
                     1
                 ],
-                "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                "signers": [
+                    "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                ]
             },
             {
                 "transferMulti": [
@@ -79,7 +83,9 @@
                     "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
                     "AazEvfQPcQ2GEFFPLF1ZLwQ7K5jDn81hve"
                 ],
-                "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                "signers": [
+                    "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                ]
             },
             {
                 "transferFrom": [
@@ -88,7 +94,9 @@
                     "Ad4H6AB3iY7gBGNukgBLgLiB6p3v627gz1",
                     1
                 ],
-                "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                "signers": [
+                    "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                ]
             },
             {
                 "approve": [
@@ -96,7 +104,9 @@
                     "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
                     1
                 ],
-                "signer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                "signers": [
+                    "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                ]
             }
         ]
     }
