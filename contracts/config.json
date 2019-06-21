@@ -16,7 +16,7 @@
         "gasLimit": 21000000
     },
     "invoke": {
-        "address": "f6cbe3ed53e054cf4b29fc8540d6469ac5b4fe9c",
+        "address": "1ddbb682743e9d9e2b71ff419e97a9358c5c4ee9",
         "defaultPayer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
         "defaultSigner": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
         "sleep": 6,
