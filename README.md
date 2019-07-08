@@ -1,16 +1,16 @@
 # Tutorial Token Box
 
-A box containing a tutorial token dApp based on Ontology Blockchain.
+A box has all you need to get started with our OEP-4 (TutorialToken) tutorial.
 
 ## Getting Started
 
 Install Punica.
 
 ```shell
-pip install punica
+pip3 install punica
 ```
 
-Download the tutorial token box.
+Download the `tutorial-token-box`.
 
 ```shell
 punica unbox tutorial-token
