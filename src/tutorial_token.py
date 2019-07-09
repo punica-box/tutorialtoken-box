@@ -66,12 +66,11 @@ def import_account():
     hex_private_key = request.json.get('hex_private_key')
     print(label, password, hex_private_key)
     try:
-        account = wallet_manager.create_account_from_private_key(label, password, hex_private_key)
-    except ValueError as e:
-        return json.jsonify({'msg': 'account exists.'}), 500
-    b58_address = account.get_address()
+        account = wallet_manager.create_account_from_private_key(password, label, hex_private_key)
+    except SDKException as e:
+        return json.jsonify({'result': e.args[1]}), 500
     wallet_manager.save()
-    return json.jsonify({'result': b58_address}), 200
+    return json.jsonify({'result': account.b58_address}), 200
 
 
 @app.route('/account_change', methods=['POST'])
@@ -89,7 +88,7 @@ def remove_account():
     b58_address_remove = request.json.get('b58_address_remove')
     password = request.json.get('password')
     try:
-        acct = wallet_manager.get_account(b58_address_remove, password)
+        acct = wallet_manager.get_account_by_b58_address(b58_address_remove, password)
         if acct is None:
             return json.jsonify({'result': ''.join(['remove ', b58_address_remove, ' failed!'])}), 500
         wallet_manager.wallet_in_mem.remove_account(b58_address_remove)
@@ -103,7 +102,7 @@ def remove_account():
 def set_contract_address():
     contract_address = request.json.get('contract_address')
     global oep4
-    oep4.set_contract_address(contract_address['value'])
+    oep4.hex_contract_address = contract_address['value']
     return json.jsonify({'result': contract_address}), 200
 
 
@@ -116,44 +115,26 @@ def get_contract_address():
 @app.route('/change_net', methods=['POST'])
 def change_net():
     network_selected = request.json.get('network_selected')
+    old_remote_rpc_address = sdk.rpc.get_address()
     if network_selected == 'MainNet':
-        remote_rpc_address = 'http://dappnode1.ont.io:20336'
-        with app.app_context() as context:
-            sdk.rpc.set_address(remote_rpc_address)
-            sdk_rpc_address = sdk.rpc.get_address()
-            if sdk_rpc_address != remote_rpc_address:
-                result = ''.join(['remote rpc address set failed. the rpc address now used is ', sdk_rpc_address])
-                return json.jsonify({'result': result}), 409
+        sdk.rpc.connect_to_main_net()
     elif network_selected == 'TestNet':
-        remote_rpc_address = 'http://polaris3.ont.io:20336'
-        with app.app_context() as context:
-            sdk.rpc.set_address(remote_rpc_address)
-            sdk_rpc_address = sdk.rpc.get_address()
-            if sdk_rpc_address != remote_rpc_address:
-                result = ''.join(['remote rpc address set failed. the rpc address now used is ', sdk_rpc_address])
-                return json.jsonify({'result': result}), 409
+        sdk.rpc.connect_to_test_net()
     elif network_selected == 'Localhost':
-        remote_rpc_address = 'http://localhost:20336'
-        with app.app_context() as context:
-            sdk.rpc.set_address(remote_rpc_address)
-            old_remote_rpc_address = sdk.rpc.get_address()
-            sdk_rpc_address = sdk.rpc.get_address()
-            if sdk_rpc_address != remote_rpc_address:
-                result = ''.join(['remote rpc address set failed. the rpc address now used is ', sdk_rpc_address])
-                return json.jsonify({'result': result}), 409
-            try:
-                sdk.rpc.get_version()
-            except SDKException as e:
-                sdk.rpc.set_address(old_remote_rpc_address)
-                error_msg = 'Other Error, ConnectionError'
-                if error_msg in e.args[1]:
-                    return json.jsonify({'result': 'Connection to localhost node failed.'}), 400
-                else:
-                    return json.jsonify({'result': e.args[1]}), 500
+        sdk.rpc.connect_to_localhost()
     else:
         return json.jsonify({'result': 'unsupported network.'}), 501
+    try:
+        sdk.rpc.get_version()
+    except SDKException as e:
+        sdk.rpc.set_address(old_remote_rpc_address)
+        error_msg = 'Other Error, ConnectionError'
+        if error_msg in e.args[1]:
+            return json.jsonify({'result': 'Connection to localhost node failed.'}), 400
+        else:
+            return json.jsonify({'result': e.args[1]}), 500
     global oep4
-    oep4 = sdk.neo_vm().oep4()
+    oep4 = sdk.neo_vm.oep4()
     return json.jsonify({'result': 'succeed'}), 200
 
 
