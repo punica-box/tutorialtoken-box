@@ -1,4 +1,4 @@
-Vue({
+new Vue({
     el: "#vue-app",
     data: function () {
         return {
@@ -67,77 +67,79 @@ Vue({
     },
     methods: {
         async submitMultiTransferForm(formName) {
-            if (formName === "multiTransferForm") {
-                let valid = await this.$refs[formName].validate();
-                if (valid) {
-                    let from = this.multiTransferForm.fromAddressArray;
-                    let to = this.multiTransferForm.toAddressArray;
-                    let amount = this.multiTransferForm.amountArray;
-                    if (from.length !== to.length || from.length !== amount.length) {
-                        this.$message({
-                            message: "Input mistake",
-                            type: "error",
-                            duration: 2400
-                        });
-                        return
-                    }
-                    let transfer_array = [];
-                    let password_array = [];
-                    for (index in this.multiTransferForm.fromAddressArray) {
-                        let password = await this.$prompt("Account Password", "TransferMulti", {
-                            confirmButtonText: "OK",
-                            cancelButtonText: "Cancel",
-                            inputPattern: /\S{1,}/,
-                            inputType: "password",
-                            inputErrorMessage: "invalid password"
-                        });
-                        password = password.value;
-                        let transfer = [from[index], to[index].value, Number(amount[index].value)];
-                        transfer_array.push(transfer);
-                        password_array.push(password);
-                    }
-                    try {
-                        await this.$confirm("This will transfer token. Continue?", "Warning", {
-                            confirmButtonText: "Confirm",
-                            cancelButtonText: "Cancel",
-                            type: "warning",
-                            closeOnClickModal: false,
-                            closeOnPressEscape: true
-                        });
-                    } catch (error) {
-                        this.$message({
-                            message: "multi transfer canceled",
-                            type: "warning",
-                            duration: 2400
-                        });
-                        return;
-                    }
-                    try {
-                        let transfer_multi_url = Flask.url_for("transfer_multi");
-                        let response = await axios.post(transfer_multi_url, {
-                            "transfer_array": JSON.stringify(transfer_array),
-                            "password_array": JSON.stringify(password_array)
-                        });
-                        let tx_hash = response.data.result;
-                        if (tx_hash.length === 64) {
-                            this.$message({
-                                type: "success",
-                                message: "Transfer successfully： ".concat(tx_hash).concat("!"),
-                                duration: 2000
-                            });
-                        } else {
-                            this.$message({
-                                type: "error",
-                                message: "Transfer failed!",
-                                duration: 800
-                            });
-                        }
-                    } catch (error) {
-                        console.log(error);
-                    }
-                } else {
-                    console.log("error submit!!");
+            if (formName !== "multiTransferForm") {
+                return;
+            }
+            let valid = await this.$refs[formName].validate();
+            if (!valid) {
+                console.log("error submit!!");
+                return;
+            }
+
+            let from = this.multiTransferForm.fromAddressArray;
+            let to = this.multiTransferForm.toAddressArray;
+            let amount = this.multiTransferForm.amountArray;
+            if (from.length !== to.length || from.length !== amount.length) {
+                this.$message({
+                    message: "Input mistake",
+                    type: "error",
+                    duration: 2400
+                });
+                return
+            }
+            let transfer_array = [];
+            let password_array = [];
+            for (index in this.multiTransferForm.fromAddressArray) {
+                let password = await this.$prompt("Account Password", "TransferMulti", {
+                    confirmButtonText: "OK",
+                    cancelButtonText: "Cancel",
+                    inputPattern: /\S{1,}/,
+                    inputType: "password",
+                    inputErrorMessage: "invalid password"
+                });
+                password = password.value;
+                let transfer = [from[index], to[index].value, Number(amount[index].value)];
+                transfer_array.push(transfer);
+                password_array.push(password);
+            }
+            try {
+                await this.$confirm("This will transfer token. Continue?", "Warning", {
+                    confirmButtonText: "Confirm",
+                    cancelButtonText: "Cancel",
+                    type: "warning",
+                    closeOnClickModal: false,
+                    closeOnPressEscape: true
+                });
+            } catch (error) {
+                this.$message({
+                    message: "multi transfer canceled",
+                    type: "warning",
+                    duration: 2400
+                });
+                return;
+            }
+            try {
+                let transfer_multi_url = Flask.url_for("transfer_multi");
+                let response = await axios.post(transfer_multi_url, {
+                    "transfer_array": JSON.stringify(transfer_array),
+                    "password_array": JSON.stringify(password_array)
+                });
+                let tx_hash = response.data.result;
+                if (tx_hash.length !== 64) {
+                    this.$message({
+                        type: "error",
+                        message: "Transfer failed!",
+                        duration: 800
+                    });
+                    return;
                 }
+                this.$message({
+                    type: "success",
+                    message: "Transfer successfully： ".concat(tx_hash).concat("!"),
+                    duration: 2000
+                });
+            } catch (error) {
+                console.log(error);
             }
         },
         resetMultiTransferForm(formName) {
