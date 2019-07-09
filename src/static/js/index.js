@@ -1,4 +1,4 @@
-new Vue({
+Vue({
     el: '#vue-app',
     data: function () {
         return {
