@@ -40,10 +40,7 @@ def Main(operation, args):
     if operation == 'totalSupply':
         return totalSupply()
     if operation == 'balanceOf':
-        if len(args) != 1:
-            return False
-        acct = args[0]
-        return balanceOf(acct)
+        return balanceOf(args)
     if operation == 'transfer':
         if len(args) != 3:
             return False
