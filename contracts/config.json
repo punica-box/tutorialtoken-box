@@ -16,7 +16,7 @@
         "gasLimit": 21000000
     },
     "invoke": {
-        "address": "1ddbb682743e9d9e2b71ff419e97a9358c5c4ee9",
+        "address": "04f4a28eb1fc55db05670076b69e846373414c6d",
         "defaultPayer": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
         "defaultSigner": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
         "sleep": 6,
@@ -31,23 +31,28 @@
             },
             {
                 "name": [],
-                "preExec": true
+                "preExec": true,
+                "return": "utf8"
             },
             {
                 "symbol": [],
-                "preExec": true
+                "preExec": true,
+                "return": "utf8"
             },
             {
                 "decimals": [],
-                "preExec": true
+                "preExec": true,
+                "return": "int"
             },
             {
                 "totalSupply": [],
-                "preExec": true
+                "preExec": true,
+                "return": "int"
             },
             {
                 "balanceOf": "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6",
-                "preExec": true
+                "preExec": true,
+                "return": "int"
             },
             {
                 "transfer": [
@@ -57,6 +62,12 @@
                 ],
                 "signers": [
                     "ANH5bHrrt111XwNEnuPZj6u95Dd6u7G4D6"
+                ],
+                "event": [
+                    "utf8",
+                    "address",
+                    "address",
+                    "int"
                 ]
             },
             {
